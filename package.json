@@ -1,0 +1,30 @@
+{
+  "name": "@rgsoft/math",
+  "version": "1.0.0",
+  "description": "Yet another JS math library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgmiranda/math-js.git"
+  },
+  "keywords": [
+    "math",
+    "complex-numbers",
+    "vectors"
+  ],
+  "author": "Ricardo Miranda <rgmiranda@live.com.ar>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rgmiranda/math-js/issues"
+  },
+  "homepage": "https://github.com/rgmiranda/math-js#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.3"
+  }
+}
