@@ -4,7 +4,8 @@
   "description": "Yet another JS math library",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "build": "tsup"
   },
   "repository": {
@@ -23,8 +24,10 @@
   },
   "homepage": "https://github.com/rgmiranda/math-js#readme",
   "devDependencies": {
+    "@vitest/coverage-v8": "^2.0.3",
     "ts-node": "^10.9.2",
     "tsup": "^8.1.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.3"
   }
 }

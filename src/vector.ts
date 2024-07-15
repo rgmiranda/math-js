@@ -23,7 +23,7 @@ export class Vector {
     /**
      * @returns { number }
      */
-    get mag() {
+    get mag(): number {
         if (this._mag === undefined) {
             this._mag = Math.sqrt(this._x * this._x + this._y * this._y);
         }
@@ -33,7 +33,7 @@ export class Vector {
     /**
      * @returns { number }
      */
-    get angle() {
+    get angle(): number {
         if (this._angle === undefined) {
             if (this.mag > 0) {
                 this._angle = Math.atan(this._y / this._x);
