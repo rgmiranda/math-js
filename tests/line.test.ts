@@ -8,33 +8,19 @@ describe(Line.name, () => {
         expect(l).toBeInstanceOf(Line);
     });
 
-    it('creates instance from two points', () => {
+    const twoPointsData = [
+        [ new Vector(1, 1), new Vector(2, 2), 1, 0 ],
+        [ new Vector(0, 1), new Vector(-1, 2), -1, 1 ],
+        [ new Vector(-1, 3), new Vector(1, 1), -1, 2 ],
+        [ new Vector(-1, 1), new Vector(1, 1), -0, 1 ],
+        [ new Vector(1, -1), new Vector(1, 1), NaN, 1 ],
+    ];
+    it.each(twoPointsData)('creates instance from two points', (v1: any, v2: any, m: any, a: any) => {
         let l: Line;
-
-        l = Line.fromPoints(new Vector(1, 1), new Vector(2, 2));
+        l = Line.fromPoints(v1, v2);
         expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBe(1);
-        expect(l.a).toBe(0);
-
-        l = Line.fromPoints(new Vector(0, 1), new Vector(-1, 2));
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBe(-1);
-        expect(l.a).toBe(1);
-
-        l = Line.fromPoints(new Vector(-1, 3), new Vector(1, 1));
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBe(-1);
-        expect(l.a).toBe(2);
-
-        l = Line.fromPoints(new Vector(-1, 1), new Vector(1, 1));
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBeCloseTo(0, 6);
-        expect(l.a).toBe(1);
-
-        l = Line.fromPoints(new Vector(1, -1), new Vector(1, 1));
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBe(undefined);
-        expect(l.a).toBe(1);
+        expect(l.m).toBe(m);
+        expect(l.a).toBe(a);
     });
 
     it('retrieves mediatrix from two points', () => {
@@ -54,5 +40,16 @@ describe(Line.name, () => {
         expect(l).toBeInstanceOf(Line);
         expect(l.m).toBeCloseTo(1, 6);
         expect(l.a).toBeCloseTo(0, 6);
+    });
+
+    const intersectionPointsData = [
+        [new Line(-1, 2),new Line(1, 0), 1, 1],
+        [new Line(1, 1),new Line(NaN, 0), 0, 1],
+        [new Line(1, 1),new Line(0, 1), 0, 1],
+    ];
+    it.each(intersectionPointsData)('calculates the intersection point', (l1: any, l2: any, x, y) => {
+        let p = l1.intersectionPoint(l2);
+        expect(p.x).toBe(x);
+        expect(p.y).toBe(y);
     });
 });

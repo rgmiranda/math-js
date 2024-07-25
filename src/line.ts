@@ -1,17 +1,13 @@
 import { Vector } from "./vector";
 
 export class Line {
-    private _m? : number;
-    private _a : number;
 
-    constructor(m: number | undefined, a: number) {
-        this._m = m;
-        this._a = a;
+    constructor(public readonly m: number, public readonly a: number) {
     }
 
     static fromPoints(p: Vector, q: Vector): Line {
-        const m = p.x === q.x ? undefined : ((p.y - q.y)/(p.x - q.x));
-        const a = m === undefined ? p.x : -1 * m * p.x + p.y;
+        const m = p.x === q.x ? NaN : ((p.y - q.y)/(p.x - q.x));
+        const a = isNaN(m) ? p.x : -1 * m * p.x + p.y;
         return new Line(m, a);
     }
 
@@ -27,11 +23,31 @@ export class Line {
         return Line.fromPoints(a, b);
     }
 
-    get m(): number | undefined {
-        return this._m
+    /**
+     * Calculates a line intersection point with another
+     * @param { Line } line 
+     * @returns { Vector }
+     */
+    intersectionPoint(line: Line): Vector {
+
+        let x, y;
+
+        if (this.m === line.m) {
+            throw new Error('The slopes are equal');
+        }
+
+        if (isNaN(this.m)) {
+            x = this.a;
+            y = line.m * x + line.a;
+        } else if (isNaN(line.m)) {
+            x = line.a;
+            y = this.m * x + this.a;
+        } else {
+            x = (line.a - this.a) / (this.m - line.m);
+            y = this.m * x + this.a;
+        }
+
+        return new Vector(x, y);
     }
 
-    get a(): number {
-        return this._a
-    }
 }
