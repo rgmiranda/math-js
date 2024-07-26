@@ -24,6 +24,13 @@ describe(Complex.name, () => {
         expect(cpx.mag).toBeCloseTo(mag, 6);
     });
 
+    it('calculates the conjugate', () => {
+        const cpx = new Complex(8, 4);
+        const conj = cpx.conjugate();
+        expect(conj.a).toBe(cpx.a);
+        expect(conj.b).toBe(-1 * cpx.b);
+    });
+
     it('adds a real number', () => {
         let cpx = new Complex(8, 5);
         cpx = cpx.add(22);

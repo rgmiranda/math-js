@@ -9,7 +9,7 @@ export class Complex {
      * 
      * @param { number | Complex} n 
      */
-    add(n: number | Complex) {
+    add(n: number | Complex): Complex {
         let { a, b } = this;
         if (typeof n === 'number') {
             a += n;
@@ -25,7 +25,7 @@ export class Complex {
      * 
      * @param { number | Complex} n 
      */
-    sub(n: number | Complex) {
+    sub(n: number | Complex): Complex {
         let { a, b } = this;
         if (typeof n === 'number') {
             a -= n;
@@ -40,7 +40,7 @@ export class Complex {
      * 
      * @param { number | Complex} n 
         */
-    mult(n: number | Complex) {
+    mult(n: number | Complex): Complex {
         let { a, b } = this;
         if (typeof n === 'number') {
             a *= n;
@@ -56,7 +56,7 @@ export class Complex {
      * 
      * @param { number | Complex} n 
      */
-    div(n: number | Complex) {
+    div(n: number | Complex): Complex {
         let { a, b } = this;
         
         if (typeof n === 'number') {
@@ -70,7 +70,7 @@ export class Complex {
         return new Complex(a, b);
     }
     
-    sqrt() {
+    sqrt(): Complex {
         let { a, b } = this;
         const m = Math.sqrt(this.mag);
         const phi = Math.atan2(this.b, this.a) * 0.5;
@@ -78,6 +78,10 @@ export class Complex {
         b = m * Math.sin(phi);
         
         return new Complex(a, b);
+    }
+
+    conjugate(): Complex {
+        return new Complex(this.a, -1 * this.b);
     }
 
     toString(): string {
