@@ -105,4 +105,15 @@ describe(Complex.name, () => {
         expect(cpx.mag).toBe(Math.sqrt(5));
     });
 
+    const toStringData = [
+        [1, 1, '1 + i'],
+        [-1, 1, '-1 + i'],
+        [1, -1, '1 - i'],
+        [8, -4, '8 - 4i'],
+    ];
+    it.each(toStringData)('converts to string', (a: any, b: any, str: any) => {
+        let cpx = new Complex(a, b);
+        expect(cpx.toString()).toBe(str);
+    });
+
 });
