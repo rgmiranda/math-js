@@ -93,10 +93,17 @@ describe(Complex.name, () => {
     it('divides by complex number', () => {
         let cpx1 = new Complex(2, 1);
         let cpx2 = new Complex(-1, -1);
-        const cpx = cpx1.div(cpx2);
+        let cpx = cpx1.div(cpx2);
         
         expect(cpx.a).toBe(-1.5);
         expect(cpx.b).toBe(0.5);
+
+        cpx1 = new Complex(-2, -2);
+        cpx2 = new Complex(-2, 0);
+        cpx = cpx1.div(cpx2);
+        
+        expect(cpx.a).toBe(1);
+        expect(cpx.b).toBe(1);
     });
 
     it('gets the square of a complex number', () => {
