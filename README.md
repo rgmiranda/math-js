@@ -226,3 +226,24 @@ console.log(v1.equals(v2)); // true
 const v = new Vector(7, 2);
 const cv = v.copy();
 ```
+
+## Modulo
+
+The `mod` function calculates the modular remainder of a number `n` modulo `m`.
+The main diference between this function and the remainder operator `%` is that
+the `mod` function applies the modular arithmetic strictly. For example
+
+```javascript
+console.log(-1 % 4);
+```
+
+will output `-1`. Whereas using the `mod`:
+
+```javascript
+console.log(mod(-1, 4));
+```
+
+we should get `3`.
+
+The `mod` function will fail if it receives a negative modulo or any non-integer
+number.
