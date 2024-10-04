@@ -1,19 +1,11 @@
 export function mod(n: number, m: number): number {
     if (!Number.isInteger(n)) {
-        throw new Error(`Non integer received: ${n}`)
+        throw new Error('The number must be an integer')
     }
 
-    if (!Number.isInteger(m)) {
-        throw new Error(`Non integer received: ${m}`)
-    }
-    
-    if (m <= 0) {
-        throw new Error(`Modulo must be positive: ${m}`)
+    if (!Number.isInteger(m) || m <= 0) {
+        throw new Error('Modulo must be a positive integer');
     }
 
-    while (n < 0) {
-        n += m;
-    }
-
-    return n % m;
+    return ((n % m) + m) % m;
 };

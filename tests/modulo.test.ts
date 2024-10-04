@@ -9,6 +9,8 @@ describe(mod.name, () => {
         [-13, 13, 0],
         [-5, 4, 3],
         [-7, 9, 2],
+        [-8, 4, 0],
+        [-6, 5, 4],
     ];
 
     it.each(testData)('calculates modulo', (n, m, expected) => {
@@ -17,11 +19,11 @@ describe(mod.name, () => {
     });
 
     it('fails on negative modulo', () => {
-        expect(() => { mod(1, -8); }).toThrowError('Modulo must be positive: -8')
+        expect(() => { mod(1, -8); }).toThrowError('Modulo must be a positive integer')
     });
 
     it('fails on non-integer number', () => {
-        expect(() => { mod(1.5, 8); }).toThrowError('Non integer received: 1.5')
-        expect(() => { mod(1, 8.3); }).toThrowError('Non integer received: 8.3')
+        expect(() => { mod(1.5, 8); }).toThrowError('The number must be an integer')
+        expect(() => { mod(1, 8.3); }).toThrowError('Modulo must be a positive integer')
     });
 });
