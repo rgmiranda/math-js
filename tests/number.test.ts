@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { mod } from "../src";
+import { gcd, mod } from "../src";
+import { lcm } from "../src/number";
 
 describe(mod.name, () => {
     const testData: number[][] = [
@@ -25,5 +26,49 @@ describe(mod.name, () => {
     it('fails on non-integer number', () => {
         expect(() => { mod(1.5, 8); }).toThrowError('The number must be an integer')
         expect(() => { mod(1, 8.3); }).toThrowError('Modulo must be a positive integer')
+    });
+});
+
+describe(gcd.name, () => {
+    const testData: number[][] = [
+        [6, 4, 2],
+        [18, 22, 2],
+        [42, 49, 7],
+        [81, 45, 9],
+        [21, 13, 1],
+    ];
+
+    it.each(testData)('calculates greatest common divisor', (n, m, expected) => {
+        const result = gcd(n, m);
+        expect(result).toBe(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { gcd(1, -8); }).toThrowError('Both numbers must be positive integers')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { gcd(1.5, 8); }).toThrowError('Both numbers must be positive integers');
+    });
+});
+
+describe(lcm.name, () => {
+    const testData: number[][] = [
+        [6, 4, 12],
+        [5, 7, 35],
+        [12, 15, 60],
+    ];
+
+    it.each(testData)('calculates least common multiple', (n, m, expected) => {
+        const result = lcm(n, m);
+        expect(result).toBe(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { lcm(1, -8); }).toThrowError('Both numbers must be positive integers')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { lcm(1.5, 8); }).toThrowError('Both numbers must be positive integers');
     });
 });
