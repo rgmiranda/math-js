@@ -33,11 +33,12 @@ describe(gcd.name, () => {
     const testData: number[][] = [
         [6, 4, 2],
         [18, 22, 2],
+        [18, 4, 2],
         [42, 49, 7],
         [81, 45, 9],
         [21, 13, 1],
     ];
-
+    
     it.each(testData)('calculates greatest common divisor', (n, m, expected) => {
         const result = gcd(n, m);
         expect(result).toBe(expected);
@@ -46,7 +47,7 @@ describe(gcd.name, () => {
     it('fails on negative value', () => {
         expect(() => { gcd(1, -8); }).toThrowError('Both numbers must be positive integers')
     });
-
+    
     it('fails on non-integer number', () => {
         expect(() => { gcd(1.5, 8); }).toThrowError('Both numbers must be positive integers');
     });
@@ -57,8 +58,9 @@ describe(lcm.name, () => {
         [6, 4, 12],
         [5, 7, 35],
         [12, 15, 60],
+        [18, 4, 36],
     ];
-
+    
     it.each(testData)('calculates least common multiple', (n, m, expected) => {
         const result = lcm(n, m);
         expect(result).toBe(expected);

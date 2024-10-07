@@ -247,3 +247,24 @@ we should get `3`.
 
 The `mod` function will fail if it receives a negative modulo or any non-integer
 number.
+
+## Greatest Common Divisor
+
+The `gcd` function calculates greatest common divisor between to positive
+integers
+
+```javascript
+console.log(gcd(18, 4));
+```
+
+will ouput `2`.
+
+## Least Common Multiple
+
+The `lcm` function calculates least common multple between to positive integers
+
+```javascript
+console.log(lcm(18, 4));
+```
+
+will ouput `36`.
