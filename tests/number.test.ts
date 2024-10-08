@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { gcd, mod } from "../src";
-import { lcm } from "../src/number";
+import { gcd, mod, lcm } from "../src";
 
 describe(mod.name, () => {
     const testData: number[][] = [
