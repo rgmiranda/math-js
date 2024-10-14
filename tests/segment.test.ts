@@ -19,6 +19,10 @@ describe(Segment.name, () => {
         [new Segment(new Vector(1, 1), new Vector(-1, -1)), new Segment(new Vector(-1, 1), new Vector(1, -1)), true],
         [new Segment(new Vector(1, 1), new Vector(-1, -1)), new Segment(new Vector(-1, 1), new Vector(0, 0)), true],
         [new Segment(new Vector(1, 1), new Vector(-1, -1)), new Segment(new Vector(-1, 1), new Vector(-1, 1)), true],
+        [new Segment(new Vector(0, 1), new Vector(-1, 0)), new Segment(new Vector(0, 1), new Vector(1, 0)), true],
+        [new Segment(new Vector(-1, 0), new Vector(0, 1)), new Segment(new Vector(0, 1), new Vector(1, 0)), true],
+        [new Segment(new Vector(0, -1), new Vector(-1, 0)), new Segment(new Vector(0, -1), new Vector(1, 0)), true],
+        [new Segment(new Vector(-1, 0), new Vector(0, -1)), new Segment(new Vector(0, -1), new Vector(1, 0)), true],
         [new Segment(new Vector(1, 1), new Vector(-1, -1)), new Segment(new Vector(-1, 1), new Vector(-0.5, 0.5)), false],
     ];
     it.each(segmentsIntersections)('detects if intersects another segment', (s1: any, s2: any, expected: any) => {

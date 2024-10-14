@@ -124,6 +124,7 @@ describe(Complex.name, () => {
         [-1, 1, '-1 + i'],
         [1, -1, '1 - i'],
         [8, -4, '8 - 4i'],
+        [8, 7, '8 + 7i'],
     ];
     it.each(toStringData)('converts to string', (a: any, b: any, str: any) => {
         let cpx = new Complex(a, b);
