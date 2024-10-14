@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { gcd, mod, lcm, factors } from "../src";
-import { prime } from "../src/number";
+import { gcd, mod, lcm, factors, totient, prime } from "../src";
 
 describe(mod.name, () => {
     const testData: number[][] = [
@@ -127,5 +126,29 @@ describe(factors.name, () => {
 
     it('fails on non-integer number', () => {
         expect(() => { factors(1.5); }).toThrowError('The number must be positive integer');
+    });
+});
+
+describe(totient.name, () => {
+    const testData: any[][] = [
+        [100, 40],
+        [10, 4],
+        [32, 16],
+        [5, 4],
+        [101, 100],
+        [103, 102],
+    ];
+    
+    it.each(testData)('get totient of number', (n, expected) => {
+        const result = totient(n);
+        expect(result).toBe(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { totient(-8); }).toThrowError('The number must be positive integer')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { totient(1.5); }).toThrowError('The number must be positive integer');
     });
 });

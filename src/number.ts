@@ -69,7 +69,7 @@ export function prime(n: number): boolean {
 /**
  * Checks if a number is prime
  * @param { number } n
- * @returns { boolean }
+ * @returns { number[][] }
  */
 export function factors(n: number): number[][] {
     if (!Number.isInteger(n) || n <= 0) {
@@ -100,4 +100,24 @@ export function factors(n: number): number[][] {
         factors.push(factor);
     }
     return factors;
+};
+
+/**
+ * Checks if a number is prime
+ * @param { number } m
+ * @returns { number }
+ */
+export function totient(m: number): number {
+    if (!Number.isInteger(m) || m <= 0) {
+        throw new Error('The number must be positive integer');
+    }
+    const factorization = factors(m);
+    let a = 1;
+    let b = 1;
+    factorization.forEach(f => {
+        a *= f[0];
+        b *= f[0] - 1;
+    });
+
+    return b * m / a; 
 };
