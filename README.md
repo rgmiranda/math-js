@@ -294,3 +294,15 @@ array with two numbers:
 2. The exponent of the factor
 
 In the example, this means that `48` is `2^4 + 3^1`.
+
+## Number Totient
+
+The `totient` function gets the [totient](https://en.wikipedia.org/wiki/Euler%27s_totient_function)
+from a positive integer, that is, the number of prime numbers from 1 to `n-1`
+for a given integer `n`.
+
+```javascript
+console.log(totient(100));
+```
+
+will ouput `40`.
