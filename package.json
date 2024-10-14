@@ -1,6 +1,6 @@
 {
   "name": "@rgsoft/math",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Yet another JS math library",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -20,7 +20,11 @@
   "keywords": [
     "math",
     "complex-numbers",
-    "vectors"
+    "vectors",
+    "numbers",
+    "prime-numbers",
+    "factors",
+    "totient"
   ],
   "author": "Ricardo Miranda <rgmiranda@live.com.ar>",
   "license": "MIT",
