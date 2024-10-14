@@ -46,10 +46,18 @@ describe(Line.name, () => {
         [new Line(-1, 2),new Line(1, 0), 1, 1],
         [new Line(1, 1),new Line(NaN, 0), 0, 1],
         [new Line(1, 1),new Line(0, 1), 0, 1],
+        [new Line(NaN, 0),new Line(1, 1), 0, 1],
     ];
+    
     it.each(intersectionPointsData)('calculates the intersection point', (l1: any, l2: any, x, y) => {
         let p = l1.intersectionPoint(l2);
         expect(p.x).toBe(x);
         expect(p.y).toBe(y);
+    });
+
+    it('calculates the intersection point', () => {
+        const l1 = new Line(-1, 2);
+        const l2 = new Line(-1, 5);
+        expect(() => l1.intersectionPoint(l2)).toThrowError('The slopes are equal');
     });
 });
