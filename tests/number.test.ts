@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { gcd, mod, lcm } from "../src";
+import { gcd, mod, lcm, factors } from "../src";
 import { prime } from "../src/number";
 
 describe(mod.name, () => {
@@ -78,6 +78,9 @@ describe(lcm.name, () => {
 describe(prime.name, () => {
     const testData: any[][] = [
         [6, false],
+        [25, false],
+        [49, false],
+        [1, true],
         [5, true],
         [2, true],
         [3, true],
@@ -99,5 +102,30 @@ describe(prime.name, () => {
 
     it('fails on non-integer number', () => {
         expect(() => { prime(1.5); }).toThrowError('The number must be positive integer');
+    });
+});
+
+describe(factors.name, () => {
+    const testData: any[][] = [
+        [6, [ [2, 1], [3, 1] ] ],
+        [7, [ [7, 1] ] ],
+        [15, [ [3, 1], [5, 1] ] ],
+        [48, [ [2, 4], [3, 1] ] ],
+        [16, [ [2, 4] ] ],
+        [72, [ [2, 3], [3, 2] ] ],
+        [100, [ [2, 2], [5, 2] ] ],
+    ];
+    
+    it.each(testData)('detects factors from number', (n, expected) => {
+        const result = factors(n);
+        expect(result).toEqual(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { factors(-8); }).toThrowError('The number must be positive integer')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { factors(1.5); }).toThrowError('The number must be positive integer');
     });
 });

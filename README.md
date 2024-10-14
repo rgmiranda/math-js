@@ -278,3 +278,19 @@ console.log(prime(17));
 ```
 
 will ouput `true`.
+
+## Prime Factorization
+
+The `factors` function gets the prime factors with their respective exponents
+
+```javascript
+console.log(factors(48));
+```
+
+will ouput `[ [2, 4], [3, 1] ]`, where each element of the array is another
+array with two numbers:
+
+1. The prime factor
+2. The exponent of the factor
+
+In the example, this means that `48` is `2^4 + 3^1`.
