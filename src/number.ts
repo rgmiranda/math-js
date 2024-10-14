@@ -47,3 +47,21 @@ export function lcm(a: number, b: number): number {
     const d = gcd(a, b);
     return a * b / d;
 };
+
+/**
+ * Checks if a number is prime
+ * @param { number } n
+ * @returns { boolean }
+ */
+export function prime(n: number): boolean {
+    if (!Number.isInteger(n) || n <= 0) {
+        throw new Error('The number must be positive integer');
+    }
+    const l = Math.sqrt(n);
+    for (let i = 2; i < l; i++) {
+        if ((n % i) === 0) {
+            return false;
+        }
+    }
+    return true;
+};

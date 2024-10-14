@@ -268,3 +268,13 @@ console.log(lcm(18, 4));
 ```
 
 will ouput `36`.
+
+## Is a Number Prime
+
+The `prime` checks if a positive integer is prime or not
+
+```javascript
+console.log(prime(17));
+```
+
+will ouput `true`.

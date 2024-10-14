@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { gcd, mod, lcm } from "../src";
+import { prime } from "../src/number";
 
 describe(mod.name, () => {
     const testData: number[][] = [
@@ -71,5 +72,32 @@ describe(lcm.name, () => {
 
     it('fails on non-integer number', () => {
         expect(() => { lcm(1.5, 8); }).toThrowError('Both numbers must be positive integers');
+    });
+});
+
+describe(prime.name, () => {
+    const testData: any[][] = [
+        [6, false],
+        [5, true],
+        [2, true],
+        [3, true],
+        [12, false],
+        [18, false],
+        [59, true],
+        [13, true],
+        [7, true],
+    ];
+    
+    it.each(testData)('detects prime number', (n, expected) => {
+        const result = prime(n);
+        expect(result).toBe(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { prime(-8); }).toThrowError('The number must be positive integer')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { prime(1.5); }).toThrowError('The number must be positive integer');
     });
 });
