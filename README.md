@@ -309,7 +309,7 @@ will ouput `40`.
 
 ## Collatz Sequence
 
-The `collatz` function gets the [collatz](https://en.wikipedia.org/wiki/Euler%27s_totient_function)
+The `collatz` function gets the [collatz](https://en.wikipedia.org/wiki/Collatz_conjecture)
 sequence from a positive integer.
 
 ```javascript
