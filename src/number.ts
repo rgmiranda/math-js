@@ -22,6 +22,10 @@ export function gcd(a: number, b: number): number {
     if (!Number.isInteger(b) || b <= 0) {
         throw new Error('Both numbers must be positive integers');
     }
+    if (a === b) {
+        return a;
+    }
+
     let d: number;
 
     do {
@@ -120,4 +124,32 @@ export function totient(m: number): number {
     });
 
     return b * m / a; 
+};
+
+/**
+ * Checks if a number is prime
+ * @param { number } n
+ * @param { number } limit
+ * @returns { number }
+ */
+export function collatz(n: number, limit: number = 10000): number[] {
+    if (!Number.isInteger(n) || n <= 0) {
+        throw new Error('The number must be positive integer');
+    }
+
+    const seq = [n];
+
+    for (let i = 1; i < limit; i++) {
+        if (n === 1) {
+            break;
+        }
+        if ((n % 2) === 0) {
+            n = n * 0.5;
+        } else {
+            n = 3 * n +1;
+        }
+        seq.push(n);
+    }
+
+    return seq;
 };

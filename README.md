@@ -306,3 +306,23 @@ console.log(totient(100));
 ```
 
 will ouput `40`.
+
+## Collatz Sequence
+
+The `collatz` function gets the [collatz](https://en.wikipedia.org/wiki/Euler%27s_totient_function)
+sequence from a positive integer.
+
+```javascript
+console.log(collatz(5));
+```
+
+will ouput `[ 5, 16, 8, 4, 2, 1 ]`.
+
+Optionally, it accepts a second parameter that limits the maximum length of the
+resulting sequence.
+
+```javascript
+console.log(collatz(5, 5));
+```
+
+will ouput `[ 5, 16, 8, 4, 2 ]`.

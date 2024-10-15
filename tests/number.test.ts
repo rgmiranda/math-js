@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { gcd, mod, lcm, factors, totient, prime } from "../src";
+import { gcd, mod, lcm, factors, totient, prime, collatz } from "../src";
 
 describe(mod.name, () => {
     const testData: number[][] = [
@@ -36,6 +36,7 @@ describe(gcd.name, () => {
         [42, 49, 7],
         [81, 45, 9],
         [21, 13, 1],
+        [18, 18, 18],
     ];
     
     it.each(testData)('calculates greatest common divisor', (n, m, expected) => {
@@ -151,5 +152,25 @@ describe(totient.name, () => {
 
     it('fails on non-integer number', () => {
         expect(() => { totient(1.5); }).toThrowError('The number must be positive integer');
+    });
+});
+
+describe(collatz.name, () => {
+    const testData: any[][] = [
+        [5, 10000, [ 5, 16, 8, 4, 2, 1 ]],
+        [5, 4, [ 5, 16, 8, 4 ]],
+    ];
+    
+    it.each(testData)('get collatz sequence of a number', (n, limit, expected) => {
+        const result = collatz(n, limit);
+        expect(result).toEqual(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { collatz(-8); }).toThrowError('The number must be positive integer')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { collatz(1.5); }).toThrowError('The number must be positive integer');
     });
 });
