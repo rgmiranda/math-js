@@ -71,7 +71,7 @@ export function prime(n: number): boolean {
 };
 
 /**
- * Checks if a number is prime
+ * Get the prime factorization of a positive integer
  * @param { number } n
  * @returns { number[][] }
  */
@@ -107,7 +107,7 @@ export function factors(n: number): number[][] {
 };
 
 /**
- * Checks if a number is prime
+ * Gets the totient of a posite integer
  * @param { number } m
  * @returns { number }
  */
@@ -127,7 +127,7 @@ export function totient(m: number): number {
 };
 
 /**
- * Checks if a number is prime
+ * Generates de Collatz sequence
  * @param { number } n
  * @param { number } limit
  * @returns { number }
@@ -152,4 +152,24 @@ export function collatz(n: number, limit: number = 10000): number[] {
     }
 
     return seq;
+};
+
+/**
+ * Gets the digital roots of a positive integer
+ * @param { number } n
+ * @returns { number }
+ */
+export function digitalRoots(n: number): number {
+    if (!Number.isInteger(n) || n <= 0) {
+        throw new Error('The number must be positive integer');
+    }
+    if (n < 10) {
+        return n;
+    }
+    do {
+        let chars = n.toString().split('');
+        n = chars.reduce((prev, c) => prev += Number(c), 0);
+    } while (n >= 10);
+
+    return n;
 };

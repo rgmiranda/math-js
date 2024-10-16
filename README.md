@@ -326,3 +326,14 @@ console.log(collatz(5, 5));
 ```
 
 will ouput `[ 5, 16, 8, 4, 2 ]`.
+
+## Digital Roots
+
+The `digitalRoots` function gets the digital roots from a positive integer, that
+is, the sum of all its digits.
+
+```javascript
+console.log(digitalRoots(19));
+```
+
+will ouput `1`.

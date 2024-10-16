@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { gcd, mod, lcm, factors, totient, prime, collatz } from "../src";
+import { gcd, mod, lcm, factors, totient, prime, collatz, digitalRoots } from "../src";
 
 describe(mod.name, () => {
     const testData: number[][] = [
@@ -172,5 +172,28 @@ describe(collatz.name, () => {
 
     it('fails on non-integer number', () => {
         expect(() => { collatz(1.5); }).toThrowError('The number must be positive integer');
+    });
+});
+
+describe(digitalRoots.name, () => {
+    const testData: any[][] = [
+        [5, 5],
+        [54, 9],
+        [55, 1],
+        [7391, 2],
+        [19999999, 1],
+    ];
+    
+    it.each(testData)('gets the digital roots sequence of a number', (n, expected) => {
+        const result = digitalRoots(n);
+        expect(result).toBe(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { digitalRoots(-8); }).toThrowError('The number must be positive integer')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { digitalRoots(1.5); }).toThrowError('The number must be positive integer');
     });
 });

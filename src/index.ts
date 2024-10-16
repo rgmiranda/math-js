@@ -9,5 +9,6 @@ export {
     factors,
     totient,
     prime,
-    collatz
+    collatz,
+    digitalRoots
 } from './number';
