@@ -24,7 +24,9 @@
     "numbers",
     "prime-numbers",
     "factors",
-    "totient"
+    "totient",
+    "digital-roots",
+    "number-bases"
   ],
   "author": "Ricardo Miranda <rgmiranda@live.com.ar>",
   "license": "MIT",
