@@ -1,8 +1,7 @@
-export { Complex } from './complex';
-export { Vector } from './vector';
-export { Line } from './line';
-export { Segment } from './segment';
 export { toBase, fromBase } from './bases';
+export { factorial, combination, permutation } from './combination';
+export { Complex } from './complex';
+export { Line } from './line';
 export {
     mod,
     gcd,
@@ -13,3 +12,5 @@ export {
     collatz,
     digitalRoots
 } from './number';
+export { Segment } from './segment';
+export { Vector } from './vector';
