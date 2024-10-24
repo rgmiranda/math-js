@@ -69,7 +69,7 @@ describe(combination.name, () => {
         expect(() => combination(9, 8.1)).toThrowError();
     });    
 
-    it('fails on grupo higher than number', () => {
+    it('fails on group higher than number', () => {
         expect(() => combination(9, 10)).toThrowError();
         expect(() => combination(0, 1)).toThrowError();
     });
