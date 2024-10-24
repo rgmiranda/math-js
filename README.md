@@ -356,3 +356,19 @@ The inverse process is achieved with the `fromBase` function.
 ```
 
 outputs `255 255`.
+
+## Combinations and Permutations
+
+### Factorial
+
+### Permutation
+
+### Combination
+
+## Probability Distribution Functions
+
+### Discrete Distributions
+
+#### Binomial
+
+#### Poisson

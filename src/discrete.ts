@@ -1,4 +1,4 @@
-import { combination } from "./combination";
+import { combination, factorial } from "./combination";
 
 /**
  * 
@@ -27,4 +27,23 @@ export function binomial(n: number, p: number, x: number = NaN): number | number
     }
 
     return Array(n + 1).fill(0).map((_, i: number) => combination(n, i) * (p ** i) * (1 - p) ** (n - i));
+}
+
+/**
+ * 
+ * @param { number } l Average
+ * @param { number } k Value to evaluate
+ */
+export function poisson(l: number, k: number): number | number[] {
+
+    if (!Number.isInteger(l) || l < 0) {
+        throw new Error('The number of experiments must be a positive integer');
+    }
+
+    if (!Number.isInteger(k) || k < 0) {
+        throw new Error('The value must be a positive integer');
+    }
+
+    return (l ** k) * Math.exp(-l) / factorial(k);
+
 }
