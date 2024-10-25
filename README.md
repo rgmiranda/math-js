@@ -372,3 +372,5 @@ outputs `255 255`.
 #### Binomial
 
 #### Poisson
+
+#### Negative Binomial

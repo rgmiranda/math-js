@@ -1,7 +1,7 @@
 export { toBase, fromBase } from './bases';
 export { factorial, combination, permutation } from './combination';
 export { Complex } from './complex';
-export { binomial, poisson } from './discrete';
+export { binomial, poisson, negativeBinomial } from './discrete';
 export { Line } from './line';
 export {
     mod,

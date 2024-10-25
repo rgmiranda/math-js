@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { binomial, poisson } from "../src";
+import { binomial, negativeBinomial, poisson } from "../src";
 
 describe(binomial.name, () => {
     const binomialData = [
@@ -41,7 +41,7 @@ describe(poisson.name, () => {
         {l: 5, x: 4, expected: 0.1755},
     ];
 
-    it.each(poissonData)('calculates the poisson distribution', ({n, l, x, expected}) => {
+    it.each(poissonData)('calculates the poisson distribution', ({l, x, expected}) => {
         expect(poisson(l, x)).toBeCloseTo(expected, 3);
     });
     
@@ -53,5 +53,39 @@ describe(poisson.name, () => {
     it('fails on invalid value', () => {
         expect(() => poisson(9, 10.2)).toThrowError();
         expect(() => poisson(5, -1)).toThrowError();
+    });
+});
+
+describe(negativeBinomial.name, () => {
+    const testData = [
+        {r: 1, p: 0.5, x: 0, expected: 0.5},
+        {r: 1, p: 0.5, x: 1, expected: 0.25},
+        {r: 1, p: 0.5, x: 2, expected: 0.125},
+        {r: 2, p: 0.5, x: 0, expected: 0.25},
+        {r: 2, p: 0.5, x: 1, expected: 0.25},
+    ];
+
+    it.each(testData)('calculates the negativeBinomial distribution', ({r, p, x, expected}) => {
+        expect(negativeBinomial(r, p, x)).toBeCloseTo(expected, 3);
+    });
+    
+    it('fails on invalid success experiments', () => {
+        expect(() => negativeBinomial(-9, 0.5, 1)).toThrowError();
+        expect(() => negativeBinomial(9.5, 0.5, 1)).toThrowError();
+    });
+
+    it('fails on invalid success probability', () => {
+        expect(() => negativeBinomial(9, 1.2, 0)).toThrowError();
+        expect(() => negativeBinomial(5, -1, 0)).toThrowError();
+    });
+
+    it('fails on invalid success probability', () => {
+        expect(() => negativeBinomial(9, 1.2, 0)).toThrowError();
+        expect(() => negativeBinomial(5, -1, 0)).toThrowError();
+    });
+
+    it('fails on invalid value', () => {
+        expect(() => negativeBinomial(9, 0.2, -2)).toThrowError();
+        expect(() => negativeBinomial(5, 0.1, 0.1)).toThrowError();
     });
 });
