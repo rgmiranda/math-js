@@ -1,7 +1,6 @@
 export { toBase, fromBase } from './bases';
 export { factorial, combination, permutation } from './combination';
 export { Complex } from './complex';
-export { binomial, poisson, negativeBinomial } from './discrete';
 export { Line } from './line';
 export {
     mod,
@@ -13,5 +12,6 @@ export {
     collatz,
     digitalRoots
 } from './number';
+export { Binomial, Poisson, NegativeBinomial } from './pmf';
 export { Segment } from './segment';
 export { Vector } from './vector';
