@@ -37,6 +37,14 @@ console.log(v.mag); // 12;
 console.log(v.y); // 12;
 ```
 
+## Dot Product
+
+```js
+const v = new Vector(2, 3);
+const u = new Vector(-2, 3);
+console.log(v.dot(u)); // 5;
+```
+
 ## Addition
 
 ```js

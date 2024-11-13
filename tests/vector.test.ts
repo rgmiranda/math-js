@@ -64,6 +64,17 @@ describe(Vector.name, () => {
         expect(v.y).toBe(10);
     });
     
+    it('calculates the dot product', () => {
+        const v = new Vector(-2, 3);
+        const u = new Vector(2, 3);
+        expect(v.dot(u)).toBe(5);
+        expect(u.dot(v)).toBe(5);
+        u.mult(4);
+        expect(u.dot(v)).toBe(20);
+        v.mult(0.5);
+        expect(u.dot(v)).toBe(10);
+    });
+    
     it('adds a vector', () => {
         const v = new Vector(-2, 3);
         v.add(new Vector(3, -5));

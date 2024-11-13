@@ -102,6 +102,15 @@ export class Vector {
 
     /**
      * 
+     * @param { number} num 
+     * @returns { number }
+     */
+    dot(v: Vector): number {
+        return this._x * v._x + this._y * v._y;
+    }
+
+    /**
+     * 
      * @param { Vector } vector 
      * @returns { Vector }
      */
