@@ -78,6 +78,15 @@ const v2 = new Vector(1, 0);
 console.log(v1.angleTo(v2)); // Math.PI * 0.5
 ```
 
+## Projection on Another Vector
+
+```js
+const v1 = new Vector(3, 4);
+const v2 = new Vector(1, 2);
+let proj = v1.projection(v2);
+console.log({x: proj.x, y: proj.y}); // { x: 2.2, y : 4.4 } 
+```
+
 ## Create Vector from Angle
 
 ```js

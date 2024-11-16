@@ -36,7 +36,7 @@ export class Vector {
     get angle(): number {
         if (this._angle === undefined) {
             if (this.mag > 0) {
-                this._angle = Math.atan(this._y / this._x);
+                this._angle = Math.atan2(this._y, this._x);
             } else {
                 this._angle = 0;
             }
@@ -159,8 +159,25 @@ export class Vector {
      * @returns { number }
      */
     angleTo(vector: Vector): number {
-        const cp = this._x * vector.x + this._y * vector.y;
+        const cp = this.dot(vector);
+        if (this.mag === 0 || vector.mag === 0) {
+            return NaN;
+        }
         return Math.acos(cp / (this.mag * vector.mag));
+    }
+
+    /**
+     * Calculates the projection on another vector
+     * @param { Vector } vector 
+     * @returns { Vector }
+     */
+    projection(vector: Vector): Vector {
+        const cp = this.dot(vector);
+        const sqrtMag = vector.dot(vector);
+        const proj = vector.copy();
+        console.log(cp, sqrtMag);
+        proj.mult(cp / sqrtMag);
+        return proj;
     }
 
     /**

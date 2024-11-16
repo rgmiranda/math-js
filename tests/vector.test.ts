@@ -21,6 +21,10 @@ describe(Vector.name, () => {
         
         v.x = 1;
         expect(v.angle).toBe(Math.PI * 0.25);
+        v.x = -1;
+        expect(v.angle).toBe(Math.PI * 0.75);
+        v.y = -1;
+        expect(v.angle).toBe(Math.PI * -0.75);
     });
     
     it('calculates angle on vector zero', () => {
@@ -111,6 +115,23 @@ describe(Vector.name, () => {
         
         v2.y = 1;
         expect(v1.angleTo(v2)).toBeCloseTo(Math.PI * 0.25, 6);
+        
+        v1.x = -1;
+        expect(v1.angleTo(v2)).toBeCloseTo(Math.PI * 0.5, 6);
+    });
+    
+    it('calculates projection on another vector', () => {
+        const v1 = new Vector(3, 4);
+        const v2 = new Vector(1, 2);
+        let proj = v1.projection(v2);
+        expect(proj.x).toBe(2.2);
+        expect(proj.y).toBe(4.4);
+
+        v1.x = -2;
+        v1.y = 1;
+        proj = v1.projection(v2);
+        expect(proj.x).toBe(0);
+        expect(proj.y).toBe(0);
     });
     
     it('copies a vector', () => {
