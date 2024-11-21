@@ -1,14 +1,20 @@
+import { erf } from "./erf";
 import { PDF } from "./pdf";
 
 export class Gaussian implements PDF {
 
     public readonly stdDev: number;
 
-    constructor(public readonly m: number, public readonly v: number) {
+    constructor(public readonly m: number = 0, public readonly v: number = 1) {
         if (v <= 0) {
             throw new Error('Variance must be positive');
         }
         this.stdDev = Math.sqrt(v);
+    }
+
+    getAccumulated(x: number): number {
+        const z = (x - this.m) / Math.sqrt(2 * this.v);
+        return 0.5 * (1 + erf(z));
     }
 
     inverseCFD(p: number): number {

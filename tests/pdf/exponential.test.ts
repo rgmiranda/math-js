@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { Exponential } from "../../src/pdf";
+import { Exponential } from "../../src";
 
 describe(Exponential.name, () => {
     let pdf: Exponential;

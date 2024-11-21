@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { erf } from "../../src/pdf";
+import { erf } from "../../src";
 
 describe(erf.name, () => {
 

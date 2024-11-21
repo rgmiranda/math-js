@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { Uniform } from "../../src/pdf";
+import { Uniform } from "../../src";
 
 describe(Uniform.name, () => {
     let pdf: Uniform;
