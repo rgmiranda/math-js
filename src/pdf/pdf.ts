@@ -1,4 +1,5 @@
 export interface PDF {
-    getValue(): number,
+    getAccumulated(x: number): number,
     getMean(): number,
+    getValue(): number,
 }

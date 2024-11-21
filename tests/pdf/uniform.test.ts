@@ -22,4 +22,10 @@ describe(Uniform.name, () => {
         const result = pdf.getMean();
         expect(result).toBe(0);
     });
+
+    it('gets the accumulated', () => {
+        expect(pdf.getAccumulated(-10)).toBe(0);
+        expect(pdf.getAccumulated(0)).toBe(0.5);
+        expect(pdf.getAccumulated(10)).toBe(1);
+    });
 });

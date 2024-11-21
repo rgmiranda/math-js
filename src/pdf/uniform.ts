@@ -7,6 +7,18 @@ export class Uniform implements PDF {
             throw new Error('Min cannot be greater than max');
         }
     }
+    getAccumulated(x: number): number {
+        if (x < this.min) {
+            return 0;
+        }
+
+        if (x > this.max) {
+            return 1;
+        }
+
+        return (x- this.min) / (this.max - this.min);
+
+    }
 
     getMean(): number {
         return (this.max + this.min) * 0.5;
