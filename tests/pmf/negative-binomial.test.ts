@@ -22,6 +22,14 @@ describe(NegativeBinomial.name, () => {
         expect(result).toBeGreaterThanOrEqual(0);
     });
     
+    it('gets the accumulated', () => {
+        const binomial = new NegativeBinomial(2, 0.5);
+        expect(binomial.getAccumulated(-1)).toBe(0);
+        expect(binomial.getAccumulated(10)).toBeCloseTo(1, 2);
+        expect(binomial.getAccumulated(10.9)).toBeCloseTo(1, 2);
+        expect(binomial.getAccumulated(1)).toBe(0.5);
+    });
+
     it('fails on invalid experiments number', () => {
         expect(() => new NegativeBinomial(-9, 1)).toThrowError();
         expect(() => new NegativeBinomial(9.5, 1)).toThrowError();

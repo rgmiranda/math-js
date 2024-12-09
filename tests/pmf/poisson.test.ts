@@ -23,6 +23,13 @@ describe(Poisson.name, () => {
         expect(result).toBeGreaterThanOrEqual(0);
     });
     
+    it('gets the accumulated', () => {
+        const poisson = new Poisson(2);
+        expect(poisson.getAccumulated(-1)).toBe(0);
+        expect(poisson.getAccumulated(10)).toBeCloseTo(1, 2);
+        expect(poisson.getAccumulated(10.123)).toBeCloseTo(1, 2);
+    });
+    
     it('fails on invalid experiments number', () => {
         expect(() => new Poisson(-9)).toThrowError();
         expect(() => new Poisson(9.5)).toThrowError();

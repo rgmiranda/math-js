@@ -12,6 +12,7 @@ export {
     collatz,
     digitalRoots
 } from './number';
+export { Exponential, Gaussian, Uniform, erf } from './pdf';
 export { Binomial, Poisson, NegativeBinomial } from './pmf';
 export { Segment } from './segment';
 export { Vector } from './vector';

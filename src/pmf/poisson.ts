@@ -11,6 +11,27 @@ export class Poisson implements PMF {
         }
     }
 
+    getAccumulated(x: number): number {
+        x = Math.floor(x);
+        if (isNaN(x)) {
+            throw new Error('Number expected');
+        }
+        if (x < 0) {
+            return 0;
+        }
+        if (this.accumulative.length > x) {
+            return this.accumulative[x];
+        }
+        let i = this.accumulative.length;
+        let acc = i > 0 ? this.accumulative[i - 1] : 0;
+        do {
+            acc += this.probability(i);
+            this.accumulative.push(acc);
+            i++;
+        } while (i <= x);
+        return this.accumulative[x];
+    }
+
     getValue(): number {
         const rnd = Math.random();
         let i = 0;
