@@ -2,7 +2,32 @@
 
 ## Probability Mass Functions
 
+The probability mass functions (**PMF**) are used for discrete probability
+distribution. The `PMF` interface defines three functions:
+
+```ts
+export interface PMF {
+    getAccumulated(x: number): number;
+    getValue(): number;
+    probability(x: number): number;
+}
+```
+
+- `getAccumulated` gets the accumulated value up to an argument.
+- `getValue` generates a random value for the given PMF.
+- `probability` gets the probability of a given value.
+
+There are three implementations:
+
+1. [Binomial Distribution](https://en.wikipedia.org/wiki/Binomial_distribution  )
+2. [Negative Binomial Distribution](https://en.wikipedia.org/wiki/Negative_binomial_distribution)
+3. [Poisson Distribution](https://en.wikipedia.org/wiki/Poisson_distribution)
+
 ### Binomial
+
+```js
+const pmf = new Binomial(10, 0.5);
+```
 
 ```txt
   Binomial n = 10; p = 0.5;
@@ -22,6 +47,10 @@
 
 ### Poisson
 
+```js
+const pmf = new Poisson(3);
+```
+
 ```txt
   Poisson l = 3
 ==================================================
@@ -39,6 +68,10 @@
 ```
 
 ### Negative Binomial
+
+```js
+const pmf = new NegativeBinomial(2, 0.5);
+```
 
 ```txt
   NegativeBinomial r = 2; p = 0.5;
@@ -58,7 +91,32 @@
 
 ## Probability Density Functions
 
+The probability density functions (**PDF**) are used for continuous probability
+distribution functions. The `PDF` interface defines three functions:
+
+```ts
+export interface PDF {
+    getAccumulated(x: number): number,
+    getMean(): number,
+    getValue(): number,
+}
+```
+
+- `getAccumulated` gets the accumulated value up to a point.
+- `getMean` returns the mean value of the distribution.
+- `getValue` generates a random value for the given distribution.
+
+There are three another implementations of these distributions:
+
+1. [Uniform Distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution)
+2. [Exponential Distribution](https://en.wikipedia.org/wiki/Exponential_distribution)
+3. [Normal or Gaussian Distribution](https://en.wikipedia.org/wiki/Normal_distribution)
+
 ### Uniform
+
+```js
+const pdf = new Uniform(0, 10);
+```
 
 ```txt
   Uniform min = 0; max = 10;
@@ -79,6 +137,10 @@
 
 ### Exponential
 
+```js
+const pdf = new Exponential(4);
+```
+
 ```txt
   Exponential mean = 4
 ==================================================
@@ -95,6 +157,10 @@
 ```
 
 ### Gaussian
+
+```js
+const pdf = new Gaussian(5, 1);
+```
 
 ```txt
   Gaussian m = 5; s = 1
