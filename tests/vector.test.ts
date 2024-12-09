@@ -15,6 +15,15 @@ describe(Vector.name, () => {
         expect(v.mag).toBe(Math.SQRT2);
     });
     
+    it('sets magnitude', () => {
+        const v = new Vector(3, -4);
+        expect(v.mag).toBe(5);
+        v.mag = 10;
+        expect(v.mag).toBe(10);
+        expect(v.x).toBe(6);
+        expect(v.y).toBe(-8);
+    });
+    
     it('calculates angle', () => {
         const v = new Vector(0, 1);
         expect(v.angle).toBe(Math.PI * 0.5);
@@ -146,6 +155,14 @@ describe(Vector.name, () => {
         v.transpose();
         expect(v.x).toBe(2);
         expect(v.y).toBe(7);
+    });
+    
+    it('limits a vector magnitude', () => {
+        const v = new Vector(8, -6);
+        v.limit(5);
+        expect(v.mag).toBe(5);
+        expect(v.x).toBe(4);
+        expect(v.y).toBe(-3);
     });
     
     it('creates vector from angle', () => {

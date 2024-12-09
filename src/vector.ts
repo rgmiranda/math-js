@@ -31,6 +31,18 @@ export class Vector {
     }
 
     /**
+     * @param { number } value
+     */
+    set mag(value: number) {
+        if (value < 0) {
+            throw new Error('New magnitude must be positive');
+        }
+        this.normalize();
+        this.mult(value);
+        this._mag = value;
+    }
+
+    /**
      * @returns { number }
      */
     get angle(): number {
@@ -191,6 +203,17 @@ export class Vector {
         this._y = this._x;
         this._x = aux;
         this.resetValues();
+    }
+
+    /**
+     * 
+     * @param { number } mag
+     */
+    limit(mag: number) {
+        if (this.mag <= mag) {
+            return;
+        }
+        this.mag = mag;
     }
 
     /**
