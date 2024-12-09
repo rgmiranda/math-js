@@ -8,7 +8,7 @@ export class Binomial implements PMF {
 
     constructor (private readonly n: number, private readonly p: number) {
         if (!Number.isInteger(n) || n < 1) {
-        throw new Error('The number of experiments must be a positive integer');
+            throw new Error('The number of experiments must be a positive integer');
         }
 
         if (!(p >= 0 && p <= 1)) {
@@ -21,6 +21,21 @@ export class Binomial implements PMF {
             acc += p;
             return acc;
         });
+    }
+
+    getAccumulated(x: number): number {
+        x = Math.floor(x);
+        if (isNaN(x)) {
+            throw new Error('Number expected');
+        }
+        if (x < 0) {
+            return 0;
+        }
+        if (x > this.n) {
+            return 1;
+        }
+
+        return this.accumulative[x];
     }
 
     getValue(): number {

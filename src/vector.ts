@@ -175,7 +175,6 @@ export class Vector {
         const cp = this.dot(vector);
         const sqrtMag = vector.dot(vector);
         const proj = vector.copy();
-        console.log(cp, sqrtMag);
         proj.mult(cp / sqrtMag);
         return proj;
     }

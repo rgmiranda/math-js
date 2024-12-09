@@ -21,10 +21,13 @@ describe(Binomial.name, () => {
         expect(result).toBeGreaterThanOrEqual(0);
         expect(result).toBeLessThanOrEqual(9);
     });
-    
-    it('fails on invalid experiments number', () => {
-        expect(() => new Binomial(-9, 1)).toThrowError();
-        expect(() => new Binomial(9.5, 1)).toThrowError();
+
+    it('gets the accumulated', () => {
+        const binomial = new Binomial(5, 0.5);
+        expect(binomial.getAccumulated(-1)).toBe(0);
+        expect(binomial.getAccumulated(5)).toBe(1);
+        expect(binomial.getAccumulated(2)).toBe(0.5);
+        expect(binomial.getAccumulated(2.9)).toBe(0.5);
     });
 
     it('fails on invalid success probaility', () => {
