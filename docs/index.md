@@ -4,5 +4,6 @@
 - [Combinations](docs/combinations.md)
 - [Complex Numbers](docs/complex.md)
 - [Number](docs/number.md)
+- [Linear Algebra](docs/linear.md)
 - [Probability](docs/probability.md)
 - [Vectors](docs/vector.md)
