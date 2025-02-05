@@ -77,6 +77,34 @@ describe(Vector.name, () => {
         expect(v.y).toBe(10);
     });
     
+    it('copies and multiplies a vector', () => {
+        const v = new Vector(4, 3);
+        const w = Vector.mult(v, 2);
+        expect(v.mag).toBe(5);
+        expect(w.mag).toBe(10);
+    });
+    
+    it('divides a vector', () => {
+        const v = new Vector(0, 12);
+        v.div(4);
+        expect(v.mag).toBe(3);
+        expect(v.y).toBe(3);
+        
+        v.x = 5;
+        v.y = 5;
+        v.div(5);
+        expect(v.mag).toBeCloseTo(Math.SQRT2, 6);
+        expect(v.x).toBe(1);
+        expect(v.y).toBe(1);
+    });
+    
+    it('copies and divides a vector', () => {
+        const v = new Vector(24, 10);
+        const w = Vector.div(v, 2);
+        expect(v.mag).toBe(26);
+        expect(w.mag).toBe(13);
+    });
+    
     it('calculates the dot product', () => {
         const v = new Vector(-2, 3);
         const u = new Vector(2, 3);
@@ -95,11 +123,25 @@ describe(Vector.name, () => {
         expect(v.y).toBe(-2);
     });
     
+    it('copies and adds a vector', () => {
+        const v = new Vector(3, 4);
+        const w = Vector.add(v, new Vector(9, 1));
+        expect(v.mag).toBe(5);
+        expect(w.mag).toBe(13);
+    });
+    
     it('subs a vector', () => {
         const v = new Vector(-2, 3);
         v.sub(new Vector(3, -5));
         expect(v.x).toBe(-5);
         expect(v.y).toBe(8);
+    });
+    
+    it('copies and subs a vector', () => {
+        const v = new Vector(12, 5);
+        const w = Vector.sub(v, new Vector(18, -3));
+        expect(v.mag).toBe(13);
+        expect(w.mag).toBe(10);
     });
     
     it('calculates distance against another vector', () => {
