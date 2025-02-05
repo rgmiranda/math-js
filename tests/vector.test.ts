@@ -139,7 +139,7 @@ describe(Vector.name, () => {
     
     it('copies and subs a vector', () => {
         const v = new Vector(12, 5);
-        const w = Vector.sub(v, new Vector(6, -3));
+        const w = Vector.sub(v, new Vector(18, -3));
         expect(v.mag).toBe(13);
         expect(w.mag).toBe(10);
     });
