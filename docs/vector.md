@@ -37,6 +37,49 @@ console.log(v.mag); // 12;
 console.log(v.y); // 12;
 ```
 
+### Static Multiplication
+
+The static scalar multiplication creates a copy of the vector and returns this
+new instance.
+
+
+```js
+const v = new Vector(0, 2);
+const w = Vector.mult(v, 2);
+
+console.log(v.mag); // 2;
+console.log(v.y); // 2;
+
+console.log(w.mag); // 4;
+console.log(w.y); // 4;
+```
+
+## Scalar Division
+
+```js
+const v = new Vector(0, 4);
+v.div(2);
+console.log(v.mag); // 2;
+console.log(v.y); // 2;
+```
+
+### Static Scalar Division
+
+The static scalar division creates a copy of the vector and returns this new
+instance.
+
+
+```js
+const v = new Vector(0, 4);
+const w = Vector.div(v, 2);
+
+console.log(v.mag); // 4;
+console.log(v.y); // 4;
+
+console.log(w.mag); // 2;
+console.log(w.y); // 2;
+```
+
 ## Dot Product
 
 ```js
@@ -54,6 +97,22 @@ console.log(v.x); // 1
 console.log(v.y); // -2
 ```
 
+### Static Addition
+
+The static addition creates a copy of the vector and returns this new instance.
+
+```js
+const v = new Vector(0, 4);
+const w = Vector.add(v, new Vector(3, 0));
+
+console.log(v.mag); // 4;
+console.log(v.y); // 4;
+
+console.log(w.mag); // 5;
+console.log(w.x); // 3;
+console.log(w.y); // 4;
+```
+
 ## Substraction
 
 ```js
@@ -61,6 +120,23 @@ const v = new Vector(-2, 3);
 v.sub(new Vector(3, -5));
 console.log(v.x); // -5
 console.log(v.y); // 8
+```
+
+### Static Substraction
+
+The static substraction creates a copy of the vector and returns this new
+instance.
+
+```js
+const v = new Vector(0, 4);
+const w = Vector.sub(v, new Vector(3, 0));
+
+console.log(v.mag); // 4;
+console.log(v.y); // 4;
+
+console.log(w.mag); // 5;
+console.log(w.x); // -3;
+console.log(w.y); // 4;
 ```
 
 ## Distance to Another Vector

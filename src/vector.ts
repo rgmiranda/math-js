@@ -115,7 +115,18 @@ export class Vector {
     /**
      * 
      * @param { number} num 
-     * @returns { number }
+     * @returns { Vector }
+     */
+    div(num: number): Vector {
+        this._x /= num;
+        this._y /= num;
+        this.resetValues();
+        return this;
+    }
+
+    /**
+     * @param {Vector} v
+     * @returns {number}
      */
     dot(v: Vector): number {
         return this._x * v._x + this._y * v._y;
@@ -225,5 +236,49 @@ export class Vector {
         const instance = new Vector(Math.cos(angle), Math.sin(angle));
         instance._angle = angle;
         return instance;
+    }
+
+    /**
+     * 
+     * @param { Vector } v 
+     * @param { Vector } w 
+     * @returns { Vector }
+     */
+    static add(v: Vector, w: Vector): Vector {
+        const instance = v.copy();
+        return instance.add(w);
+    }
+
+    /**
+     * 
+     * @param { Vector } v 
+     * @param { Vector } w 
+     * @returns { Vector }
+     */
+    static sub(v: Vector, w: Vector): Vector {
+        const instance = v.copy();
+        return instance.sub(w);
+    }
+
+    /**
+     * 
+     * @param { Vector } v 
+     * @param { number } n
+     * @returns { Vector }
+     */
+    static mult(v: Vector, n: number): Vector {
+        const instance = v.copy();
+        return instance.mult(n);
+    }
+
+    /**
+     * 
+     * @param { Vector } v 
+     * @param { number } n
+     * @returns { Vector }
+     */
+    static div(v: Vector, n: number): Vector {
+        const instance = v.copy();
+        return instance.div(n);
     }
 }
