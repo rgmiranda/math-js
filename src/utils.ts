@@ -1,4 +1,6 @@
 /**
+ * Generates an array of numbers from a `start` (inclusively) to an `end`
+ * (exclusively), using a `step`
  * 
  * @param { number } start 
  * @param { number } end 
