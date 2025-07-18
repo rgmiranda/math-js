@@ -6,4 +6,5 @@
 - [Number](docs/number.md)
 - [Linear Algebra](docs/linear.md)
 - [Probability](docs/probability.md)
+- [Utils](docs/utils.md)
 - [Vectors](docs/vector.md)
