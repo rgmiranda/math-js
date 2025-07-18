@@ -2,7 +2,7 @@ export { toBase, fromBase } from './bases';
 export { factorial, combination, permutation } from './combination';
 export { Complex } from './complex';
 export { Line } from './line';
-export { gaussJordan } from './linear';
+export { Matrix } from './matrix';
 export {
     mod,
     gcd,
