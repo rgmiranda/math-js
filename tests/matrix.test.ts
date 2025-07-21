@@ -349,7 +349,23 @@ describe(Matrix.name, () => {
       [2, 12, 9],
     ]);
     const inv = m.invert();
-    console.log(inv);
-    expect(inv.data[0].length).toBe(3);
+    const result = m.multiply(inv);
+    expect(result).toEqual(Matrix.identity(3));
+  });
+
+  it('multiplies a matrix', () => {
+    const m = new Matrix(2, 2, [
+      [1, 1],
+      [0, 6]
+    ]);
+    const n = new Matrix(2, 2, [
+      [0, 1],
+      [-1, 3]
+    ]);
+    const result = m.multiply(n);
+    expect(result.data).toEqual([
+      [-1, 4],
+      [-6, 18],
+    ]);
   });
 });

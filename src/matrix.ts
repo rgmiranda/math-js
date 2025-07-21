@@ -351,6 +351,22 @@ export class Matrix {
     return right;
   }
 
+  multiply(m: Matrix): Matrix {
+    if (this._cols !== m._rows) {
+      throw new Error('Cannot multiply: columns and rows do not match');
+    }
+    const n = new Matrix(this._rows, m._cols);
+    for (let i = 0; i < this._rows; i++) {
+      for (let j = 0; j < m._cols; j++) {
+        const row = this.getRow(i);
+        const col = m.getColumn(j);
+        const val = row.reduce((prev, curr, k) => prev + curr * col[k], 0);
+        n.set(val, i, j);
+      }
+    }
+    return n;
+  }
+
   *[Symbol.iterator](): Generator<number> {
     for (const row of this.vectors) {
       for (const value of row) {
