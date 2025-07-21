@@ -353,6 +353,23 @@ describe(Matrix.name, () => {
     expect(result).toEqual(Matrix.identity(3));
   });
 
+  it('fails on invalid size for inverse', () => {
+    const m = new Matrix(2, 3, [
+      [1, 0, 3],
+      [0, 6, 3],
+    ]);
+    expect(() => m.invert()).toThrow("Cannot invert a non-square matrix");
+  });
+
+  it('fails on non-invertible matrix', () => {
+    const m = new Matrix(3, 3, [
+      [1, 0, 3],
+      [0, 6, 3],
+      [1, 6, 6],
+    ]);
+    expect(() => m.invert()).toThrow("Non-invertible matrix");
+  });
+
   it('multiplies a matrix', () => {
     const m = new Matrix(2, 2, [
       [1, 1],
@@ -367,5 +384,20 @@ describe(Matrix.name, () => {
       [-1, 4],
       [-6, 18],
     ]);
+  });
+
+  
+  it("fails on invalid size for multiply", () => {
+    const m = new Matrix(2, 3, [
+      [1, 0, 3],
+      [0, 6, 3],
+    ]);
+    const n = new Matrix(2, 3, [
+      [1, 0, 3],
+      [0, 6, 3],
+    ]);
+    expect(() => m.multiply(n)).toThrow(
+      "Cannot multiply: columns and rows do not match"
+    );
   });
 });
