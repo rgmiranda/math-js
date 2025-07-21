@@ -322,6 +322,35 @@ export class Matrix {
     return m;
   }
 
+  hasZeroRows(): boolean {
+    for (let i = 0; i < this._rows; i++) {
+      let isZeroRow = true;
+      for (let j = 0; j < this._cols; j++) {
+        if (this.get(i, j) !== 0) {
+          isZeroRow = false;
+          break;
+        }
+      }
+      if (isZeroRow) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  invert(): Matrix {
+    if (this._rows !== this._cols) {
+      throw new Error("Cannot invert a non-square matrix");
+    }
+    const m = this.extendRight(Matrix.identity(this._rows)).reduce();
+    const left = m.sliceColumns(0, this._rows);
+    const right = m.sliceColumns(this._rows);
+    if (left.hasZeroRows()) {
+      throw new Error("Non-invertible matrix");
+    }
+    return right;
+  }
+
   *[Symbol.iterator](): Generator<number> {
     for (const row of this.vectors) {
       for (const value of row) {

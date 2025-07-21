@@ -330,4 +330,26 @@ describe(Matrix.name, () => {
       [2, 12, 9, 1],
     ]);
   });
+
+  it('detects zero rows', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [0, 0, 0, 1],
+    ]);
+    expect(m.hasZeroRows()).toBeFalsy();
+    m.set(0, 2, 3);
+    expect(m.hasZeroRows()).toBeTruthy();
+  });
+
+  it('inverts a matrix', () => {
+    const m = new Matrix(3, 3, [
+      [1, 0, 3],
+      [0, 6, 3],
+      [2, 12, 9],
+    ]);
+    const inv = m.invert();
+    console.log(inv);
+    expect(inv.data[0].length).toBe(3);
+  });
 });
