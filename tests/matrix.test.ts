@@ -385,7 +385,6 @@ describe(Matrix.name, () => {
       [-6, 18],
     ]);
   });
-
   
   it("fails on invalid size for multiply", () => {
     const m = new Matrix(2, 3, [
@@ -399,5 +398,18 @@ describe(Matrix.name, () => {
     expect(() => m.multiply(n)).toThrow(
       "Cannot multiply: columns and rows do not match"
     );
+  });
+
+  it("trasposes a matrix", () => {
+    const m = new Matrix(2, 3, [
+      [11, 1, -4],
+      [0, 6, 3],
+    ]);
+    const result = m.traspose();
+    expect(result.data).toEqual([
+      [11, 0],
+      [1, 6],
+      [-4, 3],
+    ]);
   });
 });

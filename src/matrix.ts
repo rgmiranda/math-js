@@ -367,6 +367,16 @@ export class Matrix {
     return n;
   }
 
+  traspose(): Matrix {
+    const m = new Matrix(this._cols, this._rows);
+    for (let i = 0; i < this._rows; i++) {
+      for (let j = 0; j < this._cols; j++) {
+        m.set(this.get(i, j), j, i);
+      }
+    }
+    return m;
+  }
+
   *[Symbol.iterator](): Generator<number> {
     for (const row of this.vectors) {
       for (const value of row) {
