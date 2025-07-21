@@ -14,7 +14,7 @@ export class Matrix {
       !Number.isInteger(_cols) ||
       _cols <= 0
     ) {
-      throw new Error('Matrix dimensions must be positive integers');
+      throw new Error("Matrix dimensions must be positive integers");
     }
 
     if (initialValues) {
@@ -22,7 +22,7 @@ export class Matrix {
         initialValues.length !== _rows ||
         initialValues.some((r) => r.length !== _cols)
       ) {
-        throw new Error('Initial values do not match matrix dimensions');
+        throw new Error("Initial values do not match matrix dimensions");
       }
       this.vectors = initialValues.map((row) => [...row]);
     } else {
@@ -61,12 +61,64 @@ export class Matrix {
 
   getColumn(j: number): number[] {
     this.validateColumnIndex(j);
-    return this.vectors.map(r => r[j]);
+    return this.vectors.map((r) => r[j]);
   }
 
   set(value: number, i: number, j: number): void {
     this.validateIndexes(i, j);
     this.vectors[i][j] = value;
+  }
+
+  clone(): Matrix {
+    return new Matrix(this._rows, this._cols, this.vectors);
+  }
+
+  scaleRow(i: number, scalar: number): Matrix {
+    this.validateRowIndex(i);
+    if (!Number.isFinite(scalar)) {
+      throw new Error("Multiplier must be a finite number");
+    }
+    if (isNaN(scalar)) {
+      throw new Error("Multiplier must not be NaN");
+    }
+    const m = this.clone();
+    for (let j = 0; j < this._cols; j++) {
+      const updated = m.get(i, j) * scalar;
+      m.set(updated, i, j);
+    }
+    return m;
+  }
+
+  addScaledRow(sourceRow: number, targetRow: number, scalar: number = 1): Matrix {
+    this.validateRowIndex(sourceRow);
+    this.validateRowIndex(targetRow);
+    if (!Number.isFinite(scalar)) {
+      throw new Error("Multiplier must be a finite number");
+    }
+    if (isNaN(scalar)) {
+      throw new Error("Multiplier must not be NaN");
+    }
+    const m = this.clone();
+    for (let j = 0; j < this._cols; j++) {
+      const updated = m.get(targetRow, j) + m.get(sourceRow, j) * scalar;
+      m.set(updated, targetRow, j);
+    }
+    return m;
+  }
+
+  swapRows(i0: number, i1: number): Matrix {
+    this.validateRowIndex(i0);
+    this.validateRowIndex(i1);
+    const m = this.clone();
+    if (i0 === i1) {
+      return m;
+    }
+    for (let col = 0; col < this._cols; col++) {
+      const temp = m.get(i0, col);
+      m.set(m.get(i1, col), i0, col);
+      m.set(temp, i1, col);
+    }
+    return m;
   }
 
   get data(): number[][] {
@@ -122,9 +174,9 @@ export class Matrix {
   }
 
   extend(matrix: Matrix, direction: ExtendPosition): Matrix {
-    if (direction === 'right') {
+    if (direction === "right") {
       if (this._rows !== matrix._rows) {
-        throw new Error('Cannot extend to the right: row counts must match');
+        throw new Error("Cannot extend to the right: row counts must match");
       }
       const result = new Matrix(this._rows, this._cols + matrix._cols);
       for (let i = 0; i < this._rows; i++) {
@@ -136,9 +188,9 @@ export class Matrix {
         }
       }
       return result;
-    } else if (direction === 'below') {
+    } else if (direction === "below") {
       if (this._cols !== matrix._cols) {
-        throw new Error('Cannot extend below: column counts must match');
+        throw new Error("Cannot extend below: column counts must match");
       }
       const result = new Matrix(this._rows + matrix._rows, this._cols);
       for (let i = 0; i < this._rows; i++) {
@@ -158,11 +210,11 @@ export class Matrix {
   }
 
   extendRight(matrix: Matrix): Matrix {
-    return this.extend(matrix, 'right');
+    return this.extend(matrix, "right");
   }
 
   extendBelow(matrix: Matrix): Matrix {
-    return this.extend(matrix, 'below');
+    return this.extend(matrix, "below");
   }
 
   *[Symbol.iterator](): Generator<number> {

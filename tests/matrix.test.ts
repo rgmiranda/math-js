@@ -181,4 +181,46 @@ describe(Matrix.name, () => {
     expect(() => m.getColumn(-1)).toThrowError("Column index -1 out of bounds");
     expect(() => m.getColumn(4)).toThrowError("Column index 4 out of bounds");
   });
+
+  it('swaps rows', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const result = m.swapRows(0, 2);
+    expect(result.data).toEqual([
+      [2, 12, 9, 1],
+      [0, 6, 1, 0],
+      [1, 0, 3, -1],
+    ]);
+  });
+
+  it('adds scaled rows', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const result = m.addScaledRow(0, 2, -2);
+    expect(result.data).toEqual([
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [0, 12, 3, 3],
+    ]);
+  });
+
+  it('scales a row', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const result = m.scaleRow(2, 0.5);
+    expect(result.data).toEqual([
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [1, 6, 4.5, 0.5],
+    ]);
+  });
 });
