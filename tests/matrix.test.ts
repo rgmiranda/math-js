@@ -277,4 +277,57 @@ describe(Matrix.name, () => {
       [1, 6, 4.5, 0.5],
     ]);
   });
+
+  it('slices columns from the end of a matrix', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const result = m.sliceColumns(2);
+    expect(result.data).toEqual([
+      [3, -1],
+      [1, 0],
+      [9, 1],
+    ]);
+  });
+
+  it('slices columns from the middle of a matrix', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const result = m.sliceColumns(1, 2);
+    expect(result.data).toEqual([
+      [0, 3],
+      [6, 1],
+      [12, 9],
+    ]);
+  });
+
+  it('slices rows from the end of a matrix', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const result = m.sliceRows(2);
+    expect(result.data).toEqual([
+      [2, 12, 9, 1],
+    ]);
+  });
+
+  it('slices rows from the middle of a matrix', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const result = m.sliceRows(1, 2);
+    expect(result.data).toEqual([
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+  });
 });

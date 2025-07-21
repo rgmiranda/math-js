@@ -1,4 +1,5 @@
 export type ExtendPosition = 'right' | 'below';
+export type SliceDirection = 'vertical' | 'horizontal';
 
 export class Matrix {
   private readonly vectors: number[][];
@@ -67,7 +68,7 @@ export class Matrix {
 
   set(value: number, i: number, j: number): void {
     this.validateIndexes(i, j);
-    this.vectors[i][j] = Matrix.normalizeZero(value);;
+    this.vectors[i][j] = Matrix.normalizeZero(value);
   }
 
   clone(): Matrix {
@@ -279,6 +280,46 @@ export class Matrix {
 
   extendBelow(matrix: Matrix): Matrix {
     return this.extend(matrix, "below");
+  }
+
+  sliceColumns(start: number, length?: number): Matrix {
+    if (length === undefined) {
+      length = this._cols - start;
+    }
+    if (length <= 0) {
+      throw new Error("Length must be a positive integer");
+    }
+    this.validateColumnIndex(start);
+    this.validateColumnIndex(start + length - 1);
+    const m = new Matrix(this._rows, length);
+    for (let i = 0; i < this._rows; i++) {
+      for (let j = 0; j < length; j++) {
+        m.set(this.get(i, start + j), i, j);
+      }
+    }
+    return m;
+  }
+
+  sliceRows(start: number, length?: number): Matrix {
+    this.validateRowIndex(start);
+
+    if (length === undefined) {
+      length = this._rows - start;
+    }
+
+    if (length <= 0) {
+      throw new Error("Length must be a positive integer");
+    }
+
+    this.validateRowIndex(start + length - 1);
+
+    const m = new Matrix(length, this._cols);
+    for (let i = 0; i < length; i++) {
+      for (let j = 0; j < this._cols; j++) {
+        m.set(this.get(start + i, j), i, j);
+      }
+    }
+    return m;
   }
 
   *[Symbol.iterator](): Generator<number> {
