@@ -1,3 +1,5 @@
+export type ExtendPosition = 'right' | 'below';
+
 export class Matrix {
   private readonly vectors: number[][];
 
@@ -12,7 +14,7 @@ export class Matrix {
       !Number.isInteger(_cols) ||
       _cols <= 0
     ) {
-      throw new Error("Matrix dimensions must be positive integers");
+      throw new Error('Matrix dimensions must be positive integers');
     }
 
     if (initialValues) {
@@ -20,7 +22,7 @@ export class Matrix {
         initialValues.length !== _rows ||
         initialValues.some((r) => r.length !== _cols)
       ) {
-        throw new Error("Initial values do not match matrix dimensions");
+        throw new Error('Initial values do not match matrix dimensions');
       }
       this.vectors = initialValues.map((row) => [...row]);
     } else {
@@ -99,6 +101,50 @@ export class Matrix {
       reduced[i][i] /= reduced[i][i];
     }
     return new Matrix(this._rows, this._cols, reduced);
+  }
+
+  extend(matrix: Matrix, direction: ExtendPosition): Matrix {
+    if (direction === 'right') {
+      if (this._rows !== matrix._rows) {
+        throw new Error('Cannot extend to the right: row counts must match');
+      }
+      const result = new Matrix(this._rows, this._cols + matrix._cols);
+      for (let i = 0; i < this._rows; i++) {
+        for (let j = 0; j < this._cols; j++) {
+          result.set(this.get(i, j), i, j);
+        }
+        for (let j = 0; j < matrix._cols; j++) {
+          result.set(matrix.get(i, j), i, j + this._cols);
+        }
+      }
+      return result;
+    } else if (direction === 'below') {
+      if (this._cols !== matrix._cols) {
+        throw new Error('Cannot extend below: column counts must match');
+      }
+      const result = new Matrix(this._rows + matrix._rows, this._cols);
+      for (let i = 0; i < this._rows; i++) {
+        for (let j = 0; j < this._cols; j++) {
+          result.set(this.get(i, j), i, j);
+        }
+      }
+      for (let i = 0; i < matrix._rows; i++) {
+        for (let j = 0; j < this._cols; j++) {
+          result.set(matrix.get(i, j), i + this._rows, j);
+        }
+      }
+      return result;
+    } else {
+      throw new Error(`Invalid direction: ${direction}`);
+    }
+  }
+
+  extendRight(matrix: Matrix): Matrix {
+    return this.extend(matrix, 'right');
+  }
+
+  extendBelow(matrix: Matrix): Matrix {
+    return this.extend(matrix, 'below');
   }
 
   *[Symbol.iterator](): Generator<number> {

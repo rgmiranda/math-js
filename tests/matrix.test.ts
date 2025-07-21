@@ -1,14 +1,14 @@
-import { describe, expect, it } from 'vitest';
-import { Matrix } from '../src';
+import { describe, expect, it } from "vitest";
+import { Matrix } from "../src";
 
 describe(Matrix.name, () => {
-  it('sets and gets elements', () => {
+  it("sets and gets elements", () => {
     const m = new Matrix(3, 3);
     m.set(-90, 0, 2);
     expect(m.get(0, 2)).toBe(-90);
   });
 
-  it('initializes with values', () => {
+  it("initializes with values", () => {
     const m = new Matrix(2, 2, [
       [1, 2],
       [3, 4],
@@ -17,30 +17,30 @@ describe(Matrix.name, () => {
     expect(m.get(1, 1)).toBe(4);
   });
 
-  it('fails on invalid indexes', () => {
+  it("fails on invalid indexes", () => {
     const m = new Matrix(2, 2);
-    expect(() => m.get(2, 0)).toThrowError('Row index 2 out of bounds');
-    expect(() => m.get(0, 2)).toThrowError('Column index 2 out of bounds');
-    expect(() => m.set(1, 2, 0)).toThrowError('Row index 2 out of bounds');
-    expect(() => m.set(1, 0, 2)).toThrowError('Column index 2 out of bounds');
+    expect(() => m.get(2, 0)).toThrowError("Row index 2 out of bounds");
+    expect(() => m.get(0, 2)).toThrowError("Column index 2 out of bounds");
+    expect(() => m.set(1, 2, 0)).toThrowError("Row index 2 out of bounds");
+    expect(() => m.set(1, 0, 2)).toThrowError("Column index 2 out of bounds");
   });
 
-  it('fails on invalid initial values', () => {
+  it("fails on invalid initial values", () => {
     expect(() => new Matrix(2, 2, [])).toThrowError(
-      'Initial values do not match matrix dimensions'
+      "Initial values do not match matrix dimensions"
     );
   });
 
-  it('fails on invalid row or col number', () => {
+  it("fails on invalid row or col number", () => {
     expect(() => new Matrix(-2, 2)).toThrowError(
-      'Matrix dimensions must be positive integers'
+      "Matrix dimensions must be positive integers"
     );
     expect(() => new Matrix(2, -2)).toThrowError(
-      'Matrix dimensions must be positive integers'
+      "Matrix dimensions must be positive integers"
     );
   });
 
-  it('retrieves the base matrix', () => {
+  it("retrieves the base matrix", () => {
     const m = new Matrix(2, 2, [
       [1, 2],
       [3, 4],
@@ -51,7 +51,7 @@ describe(Matrix.name, () => {
     ]);
   });
 
-  it('retrieves the base matrix', () => {
+  it("retrieves the base matrix", () => {
     const m = new Matrix(2, 2, [
       [1, 2],
       [3, 4],
@@ -62,7 +62,7 @@ describe(Matrix.name, () => {
     ]);
   });
 
-  it('iterates through the elements', () => {
+  it("iterates through the elements", () => {
     const m = new Matrix(3, 4, [
       [1, 2, 3, 4],
       [5, 6, 7, 8],
@@ -88,11 +88,11 @@ describe(Matrix.name, () => {
         row: expect.any(Number),
         col: expect.any(Number),
         value: expect.any(Number),
-      })
+      });
     }
   });
-  
-  it('reduces the matrix', () => {
+
+  it("reduces the matrix", () => {
     const m = new Matrix(3, 4, [
       [1, 0, 3, -1],
       [0, 6, 1, 0],
@@ -100,12 +100,47 @@ describe(Matrix.name, () => {
     ]);
     const r = m.reduce();
 
-    for(const e of r.entries()) {
+    for (const e of r.entries()) {
       if (e.row === e.col) {
         expect(e.value).toBe(1);
       } else if (e.col < 3) {
         expect(e.value).toBe(0);
       }
     }
+  });
+
+  it("extends a matrix on the right", () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    const n = new Matrix(3, 1, [[-5], [7], [6]]);
+    const extended = m.extendRight(n);
+
+    expect(extended.data).toEqual([
+      [1, 0, 3, -1, -5],
+      [0, 6, 1, 0, 7],
+      [2, 12, 9, 1, 6],
+    ]);
+  });
+
+  it("extends a matrix on the below", () => {
+    const m = new Matrix(2, 1, [[1], [0]]);
+    const n = new Matrix(3, 1, [[-5], [7], [6]]);
+    const extended = m.extendBelow(n);
+
+    expect(extended.data).toEqual([[1], [0], [-5], [7], [6]]);
+  });
+
+  it("fails when extending invalid sizes", () => {
+    const m = new Matrix(2, 2, [[1, 0], [0, -9]]);
+    const n = new Matrix(3, 1, [[-5], [7], [6]]);
+    expect(() => m.extendRight(n)).toThrowError(
+      'Cannot extend to the right: row counts must match'
+    );
+    expect(() => m.extendBelow(n)).toThrowError(
+      'Cannot extend below: column counts must match'
+    );
   });
 });
