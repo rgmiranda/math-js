@@ -33,9 +33,17 @@ export class Matrix {
   }
 
   private validateIndexes(i: number, j: number): void {
+    this.validateRowIndex(i);
+    this.validateColumnIndex(j);
+  }
+
+  private validateRowIndex(i: number): void {
     if (i < 0 || i >= this._rows) {
       throw new Error(`Row index ${i} out of bounds`);
     }
+  }
+
+  private validateColumnIndex(j: number): void {
     if (j < 0 || j >= this._cols) {
       throw new Error(`Column index ${j} out of bounds`);
     }
@@ -44,6 +52,16 @@ export class Matrix {
   get(i: number, j: number): number {
     this.validateIndexes(i, j);
     return this.vectors[i][j];
+  }
+
+  getRow(i: number): number[] {
+    this.validateRowIndex(i);
+    return this.vectors[i];
+  }
+
+  getColumn(j: number): number[] {
+    this.validateColumnIndex(j);
+    return this.vectors.map(r => r[j]);
   }
 
   set(value: number, i: number, j: number): void {

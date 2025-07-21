@@ -143,4 +143,42 @@ describe(Matrix.name, () => {
       'Cannot extend below: column counts must match'
     );
   });
+
+  it('gets a row', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    expect(m.getRow(0)).toEqual([1, 0, 3, -1]);
+  });
+
+  it('gets a column', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    expect(m.getColumn(2)).toEqual([3, 1, 9]);
+  });
+
+  it('fails when getting an invalid row index', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    expect(() => m.getRow(-1)).toThrowError("Row index -1 out of bounds");
+    expect(() => m.getRow(3)).toThrowError("Row index 3 out of bounds");
+  });
+
+  it('fails when getting an invalid column index', () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 1, 0],
+      [2, 12, 9, 1],
+    ]);
+    expect(() => m.getColumn(-1)).toThrowError("Column index -1 out of bounds");
+    expect(() => m.getColumn(4)).toThrowError("Column index 4 out of bounds");
+  });
 });
