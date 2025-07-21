@@ -2,6 +2,7 @@ export type ExtendPosition = 'right' | 'below';
 
 export class Matrix {
   private readonly vectors: number[][];
+  private static readonly EPSILON = 1e-10;
 
   constructor(
     private readonly _rows: number,
@@ -66,13 +67,50 @@ export class Matrix {
 
   set(value: number, i: number, j: number): void {
     this.validateIndexes(i, j);
-    this.vectors[i][j] = value;
+    this.vectors[i][j] = Matrix.normalizeZero(value);;
   }
 
   clone(): Matrix {
     return new Matrix(this._rows, this._cols, this.vectors);
   }
 
+  private static normalizeZero(n: number): number {
+    return Math.abs(n) < Matrix.EPSILON ? 0 : n;
+  }
+
+  /**
+   * Creates an identity matrix of the given size.
+   * The identity matrix is a square matrix with 1s on the diagonal and 0s elsewhere.
+   *
+   * @param size - The number of rows and columns of the square matrix. Must be a positive integer.
+   * @returns A new identity matrix of dimensions `size x size`.
+   *
+   * @example
+   * const I = Matrix.identity(3);
+   * // [[1,0,0],
+   * //  [0,1,0],
+   * //  [0,0,1]]
+   */
+  static identity(size: number): Matrix {
+    const m = new Matrix(size, size);
+    for (let i = 0; i < size; i++) {
+      m.set(1, i, i);
+    }
+    return m;
+  }
+
+  /**
+   * Returns a new matrix where a specific row has been multiplied by a scalar value.
+   *
+   * @param i - The index of the row to multiply (0-based).
+   * @param n - The scalar multiplier.
+   * @returns A new matrix with the specified row scaled.
+   *
+   * @throws If the row index is out of bounds or the multiplier is not finite.
+   *
+   * @example
+   * const scaled = m.scaleRow(1, 5); // multiplies row 1 by 5
+   */
   scaleRow(i: number, scalar: number): Matrix {
     this.validateRowIndex(i);
     if (!Number.isFinite(scalar)) {
@@ -89,7 +127,25 @@ export class Matrix {
     return m;
   }
 
-  addScaledRow(sourceRow: number, targetRow: number, scalar: number = 1): Matrix {
+  /**
+   * Returns a new matrix where a multiple of one row is added to another row.
+   *
+   * @param sourceRow - The index of the row to multiply (0-based).
+   * @param targetRow - The index of the row to which the result will be added (0-based).
+   * @param scalar - The multiplier applied to the source row. Defaults to 1.
+   * @returns A new matrix with the scaled row added to the target row.
+   *
+   * @throws If any row indices are out of bounds or the scalar is not finite.
+   *
+   * @example
+   * const result = m.addScaledRow(0, 2, 3);
+   * // Adds 3 times row 0 to row 2
+   */
+  addScaledRow(
+    sourceRow: number,
+    targetRow: number,
+    scalar: number = 1
+  ): Matrix {
     this.validateRowIndex(sourceRow);
     this.validateRowIndex(targetRow);
     if (!Number.isFinite(scalar)) {
@@ -106,6 +162,18 @@ export class Matrix {
     return m;
   }
 
+  /**
+   * Returns a new matrix where two specified rows have been swapped.
+   *
+   * @param i - The index of the first row to swap (0-based).
+   * @param j - The index of the second row to swap (0-based).
+   * @returns A new matrix with the specified rows swapped.
+   *
+   * @throws If any of the row indices are out of bounds.
+   *
+   * @example
+   * const m2 = m.swapRows(0, 2);
+   */
   swapRows(i0: number, i1: number): Matrix {
     this.validateRowIndex(i0);
     this.validateRowIndex(i1);
@@ -126,51 +194,47 @@ export class Matrix {
   }
 
   reduce(): Matrix {
-    const reduced: number[][] = this.data;
-
-    const matrixSize = Math.min(this._rows, this._cols - 1);
-
-    for (let j = 0; j < matrixSize; j++) {
-      if (reduced[j][j] === 0) {
-        let i = j + 1;
-        let found = false;
-        while (!found && i < this._rows) {
-          if (reduced[i][j] !== 0) {
-            [reduced[j], reduced[i]] = [reduced[i], reduced[j]];
-            found = true;
+    let reduced = this.clone();
+    const minSize = Math.min(this._rows, this._cols);
+    let row = 0;
+    for (let col = 0; col < minSize; col++) {
+      if (reduced.get(row, col) === 0) {
+        for (let k = col + 1; k < reduced._rows; k++) {
+          if (reduced.get(k, col) !== 0) {
+            reduced = reduced.swapRows(k, row);
           }
-          i++;
-        }
-        if (!found) {
-          throw new Error(`No reductible value found on column ${j}`);
         }
       }
 
-      for (let i = j + 1; i < this._rows; i++) {
-        if (reduced[i][j] === 0) {
-          continue;
+      const pivot = reduced.get(row, col);
+
+      if (pivot === 0) {
+        continue;
+      }
+
+      reduced = reduced.scaleRow(row, 1 / pivot);
+
+      for (let k = row + 1; k < this._rows; k++) {
+        const factor = -reduced.get(k, col);
+        if (factor !== 0) {
+          reduced = reduced.addScaledRow(row, k, factor);
         }
-        const mult = -reduced[i][j] / reduced[j][j];
-        for (let k = j; k < this._cols; k++) {
-          reduced[i][k] += mult * reduced[j][k];
+      }
+
+      for (let k = row - 1; k >= 0; k--) {
+        const factor = -reduced.get(k, col);
+        if (factor !== 0) {
+          reduced = reduced.addScaledRow(row, k, factor);
         }
+      }
+
+      row++;
+      if (row >= reduced._rows) {
+        break;
       }
     }
 
-    for (let i = matrixSize - 1; i >= 0; i--) {
-      for (let j = 0; j < i; j++) {
-        if (reduced[j][i] === 0) {
-          continue;
-        }
-        const mult = -reduced[j][i] / reduced[i][i];
-        for (let k = i; k < this._cols; k++) {
-          reduced[j][k] += mult * reduced[i][k];
-        }
-      }
-      reduced[i][this._cols - 1] /= reduced[i][i];
-      reduced[i][i] /= reduced[i][i];
-    }
-    return new Matrix(this._rows, this._cols, reduced);
+    return reduced;
   }
 
   extend(matrix: Matrix, direction: ExtendPosition): Matrix {

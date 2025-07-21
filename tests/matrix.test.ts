@@ -109,6 +109,51 @@ describe(Matrix.name, () => {
     }
   });
 
+  it("reduces wide matrix", () => {
+    const m = new Matrix(3, 4, [
+      [1, 0, 3, -1],
+      [0, 6, 3, 0],
+      [2, 12, 9, 1],
+    ]);
+    const r = m.reduce();
+    
+    expect(r.data).toEqual([
+      [1, 0, 0, 2],
+      [0, 1, 0, 1/2],
+      [0, 0, 1, -1],
+    ]);
+  });
+
+  it("reduces narrow matrix", () => {
+    const m = new Matrix(3, 2, [
+      [1, 1,],
+      [1, 4],
+      [2, 11],
+    ]);
+    const r = m.reduce();
+
+    expect(r.data).toEqual([
+      [1, 0],
+      [0, 1],
+      [0, 0],
+    ]);
+  });
+
+  it("reduces linear dependent matrix", () => {
+    const m = new Matrix(3, 3, [
+      [1, 1, 0],
+      [1, 4, -2],
+      [2, 5, -2],
+    ]);
+    const r = m.reduce();
+
+    expect(r.data).toEqual([
+      [1, 0, 2 / 3],
+      [0, 1, -2 / 3],
+      [0, 0, 0],
+    ]);
+  });
+
   it("extends a matrix on the right", () => {
     const m = new Matrix(3, 4, [
       [1, 0, 3, -1],
@@ -122,6 +167,15 @@ describe(Matrix.name, () => {
       [1, 0, 3, -1, -5],
       [0, 6, 1, 0, 7],
       [2, 12, 9, 1, 6],
+    ]);
+  });
+
+  it("generates identity matrix", () => {
+    const m = Matrix.identity(3);
+    expect(m.data).toEqual([
+      [1, 0, 0],
+      [0, 1, 0],
+      [0, 0, 1],
     ]);
   });
 
