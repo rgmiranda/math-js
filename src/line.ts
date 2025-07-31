@@ -1,53 +1,75 @@
 import { Vector } from "./vector";
 
 export class Line {
+  private static readonly EPSILON = 1e-10;
 
-    constructor(public readonly m: number, public readonly a: number) {
+  constructor(
+    public readonly a: number,
+    public readonly b: number,
+    public readonly c: number
+  ) {}
+
+  private static normalizeZero(n: number): number {
+    return Math.abs(n) < Line.EPSILON ? 0 : n;
+  }
+
+  static fromPoints(p: Vector, q: Vector): Line {
+    const a = Line.normalizeZero(p.y - q.y);
+    const b = Line.normalizeZero(q.x - p.x);
+    const c = Line.normalizeZero(p.x * q.y - q.x * p.y);
+    return new Line(a, b, c);
+  }
+
+  static mediatrix(p: Vector, q: Vector): Line {
+    const mid = p.copy().add(q).mult(0.5);
+    const dx = q.x - p.x;
+    const dy = q.y - p.y;
+
+    // Perpendicular slope => (-dy, dx)
+    const a = Line.normalizeZero(-dx);
+    const b = Line.normalizeZero(-dy);
+    const c = Line.normalizeZero(-(a * mid.x + b * mid.y));
+    return new Line(a, b, c);
+  }
+
+  intersectionPoint(line: Line): Vector {
+    const det = this.a * line.b - line.a * this.b;
+    if (Math.abs(det) < 1e-10) {
+      throw new Error("Lines are parallel or coincident");
     }
 
-    static fromPoints(p: Vector, q: Vector): Line {
-        const m = p.x === q.x ? NaN : ((p.y - q.y)/(p.x - q.x));
-        const a = isNaN(m) ? p.x : -1 * m * p.x + p.y;
-        return new Line(m, a);
-    }
+    const x = (this.b * line.c - line.b * this.c) / det;
+    const y = (line.a * this.c - this.a * line.c) / det;
+    return new Vector(x, y);
+  }
 
-    static mediatrix(p: Vector, q: Vector): Line {
-        const a = q.copy();
-        a.sub(p);
-        a.mult(0.5);
-        const b = Vector.fromAngle(a.angle + Math.PI * 0.5);
+  containsPoint(p: Vector, tolerance = Line.EPSILON): boolean {
+    return Math.abs(this.a * p.x + this.b * p.y + this.c) < tolerance;
+  }
 
-        a.add(p);
-        b.add(a);
+  get slope(): number {
+    return this.b === 0 ? NaN : Line.normalizeZero(-this.a / this.b);
+  }
 
-        return Line.fromPoints(a, b);
-    }
+  get yIntercept(): number | null {
+    return this.b === 0 ? null : Line.normalizeZero(-this.c / this.b);
+  }
 
-    /**
-     * Calculates a line intersection point with another
-     * @param { Line } line 
-     * @returns { Vector }
-     */
-    intersectionPoint(line: Line): Vector {
+  get xIntercept(): number | null {
+    return this.a === 0 ? null : Line.normalizeZero(-this.c / this.a);
+  }
 
-        let x, y;
+  get yInterceptPoint(): Vector | null {
+    const y = this.yIntercept;
+    return y === null ? null : new Vector(0, y);
+  }
 
-        if (this.m === line.m) {
-            throw new Error('The slopes are equal');
-        }
+  get xInterceptPoint(): Vector | null {
+    const x = this.xIntercept;
+    return x === null ? null : new Vector(x, 0);
+  }
 
-        if (isNaN(this.m)) {
-            x = this.a;
-            y = line.m * x + line.a;
-        } else if (isNaN(line.m)) {
-            x = line.a;
-            y = this.m * x + this.a;
-        } else {
-            x = (line.a - this.a) / (this.m - line.m);
-            y = this.m * x + this.a;
-        }
-
-        return new Vector(x, y);
-    }
-
+  toString(): string {
+    return `${this.a}x + ${this.b}y + ${this.c} = 0`;
+  }
 }

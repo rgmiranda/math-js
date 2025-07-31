@@ -3,61 +3,218 @@ import { Line } from "../src/line";
 import { Vector } from "../src";
 
 describe(Line.name, () => {
-    it('creates a new instance', () => {
-        const l = new Line(1, 4);
-        expect(l).toBeInstanceOf(Line);
-    });
+  it("creates a new instance", () => {
+    const l = new Line(1, 1, 2);
+    expect(l).toBeInstanceOf(Line);
+    expect(l.toString()).toBe('1x + 1y + 2 = 0');
+  });
 
-    const twoPointsData = [
-        [ new Vector(1, 1), new Vector(2, 2), 1, 0 ],
-        [ new Vector(0, 1), new Vector(-1, 2), -1, 1 ],
-        [ new Vector(-1, 3), new Vector(1, 1), -1, 2 ],
-        [ new Vector(-1, 1), new Vector(1, 1), -0, 1 ],
-        [ new Vector(1, -1), new Vector(1, 1), NaN, 1 ],
-    ];
-    it.each(twoPointsData)('creates instance from two points', (v1: any, v2: any, m: any, a: any) => {
-        let l: Line;
-        l = Line.fromPoints(v1, v2);
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBe(m);
-        expect(l.a).toBe(a);
-    });
+  const twoPointsData = [
+    {
+      p: new Vector(1, 1),
+      q: new Vector(2, 2),
+      a: -1,
+      b: 1,
+      c: 0,
+      slope: 1,
+      xIntercept: 0,
+      yIntercept: 0,
+    },
+    {
+      p: new Vector(1, 0),
+      q: new Vector(2, 1),
+      a: -1,
+      b: 1,
+      c: 1,
+      slope: 1,
+      xIntercept: 1,
+      yIntercept: -1,
+    },
+    {
+      p: new Vector(-1, 2),
+      q: new Vector(0, 1),
+      a: 1,
+      b: 1,
+      c: -1,
+      slope: -1,
+      xIntercept: 1,
+      yIntercept: 1,
+    },
+    {
+      p: new Vector(1, 1),
+      q: new Vector(2, 5),
+      a: -4,
+      b: 1,
+      c: 3,
+      slope: 4,
+      xIntercept: 0.75,
+      yIntercept: -3,
+    },
+    {
+      p: new Vector(1, 1),
+      q: new Vector(1, 5),
+      a: -4,
+      b: 0,
+      c: 4,
+      slope: NaN,
+      xIntercept: 1,
+      yIntercept: null,
+    },
+    {
+      q: new Vector(1, 1),
+      p: new Vector(2, 1),
+      a: 0,
+      b: -1,
+      c: 1,
+      slope: 0,
+      xIntercept: null,
+      yIntercept: 1,
+    },
+  ];
 
-    it('retrieves mediatrix from two points', () => {
-        let l: Line;
+  it.each(twoPointsData)(
+    "creates instance from two points",
+    ({ p, q, a, b, c, slope, xIntercept, yIntercept }) => {
+      let l: Line;
+      l = Line.fromPoints(p, q);
+      expect(l).toBeInstanceOf(Line);
+      expect(l.a).toBe(a);
+      expect(l.b).toBe(b);
+      expect(l.c).toBe(c);
+      expect(l.slope).toBe(slope);
+      expect(l.xIntercept).toBe(xIntercept);
+      expect(l.yIntercept).toBe(yIntercept);
+    }
+  );
 
-        l = Line.mediatrix(new Vector(0, 0), new Vector(0, 2));
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBeCloseTo(0, 6);
-        expect(l.a).toBeCloseTo(1, 6);
+  const mediatrixData = [
+    {
+      p: new Vector(-1, 1),
+      q: new Vector(1, -1),
+      a: -2,
+      b: 2,
+      c: 0,
+      slope: 1,
+      xIntercept: 0,
+      yIntercept: 0,
+    },
+    {
+      p: new Vector(-1, -1),
+      q: new Vector(1, 1),
+      a: -2,
+      b: -2,
+      c: 0,
+      slope: -1,
+      xIntercept: 0,
+      yIntercept: 0,
+    },
+    {
+      p: new Vector(0, 0),
+      q: new Vector(2, 0),
+      a: -2,
+      b: 0,
+      c: 2,
+      slope: NaN,
+      xIntercept: 1,
+      yIntercept: null,
+    },
+    {
+      p: new Vector(0, 0),
+      q: new Vector(0, 2),
+      a: 0,
+      b: -2,
+      c: 2,
+      slope: 0,
+      xIntercept: null,
+      yIntercept: 1,
+    },
+  ];
 
-        l = Line.mediatrix(new Vector(0, 0), new Vector(2, 2));
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBeCloseTo(-1, 6);
-        expect(l.a).toBeCloseTo(2, 6);
+  it.each(mediatrixData)(
+    "retrieves mediatrix from two points",
+    ({ p, q, a, b, c, slope, xIntercept, yIntercept }) => {
+      const l = Line.mediatrix(p, q);
+      expect(l).toBeInstanceOf(Line);
+      expect(l.a).toBe(a);
+      expect(l.b).toBe(b);
+      expect(l.c).toBe(c);
+      expect(l.slope).toBe(slope);
+      expect(l.xIntercept).toBe(xIntercept);
+      expect(l.yIntercept).toBe(yIntercept);
+    }
+  );
 
-        l = Line.mediatrix(new Vector(-1, 1), new Vector(1, -1));
-        expect(l).toBeInstanceOf(Line);
-        expect(l.m).toBeCloseTo(1, 6);
-        expect(l.a).toBeCloseTo(0, 6);
-    });
+  const intersectionPointsData = [
+    {
+      l1: new Line(1, -1, 0),
+      l2: new Line(1, 1, -2),
+      x: 1,
+      y: 1
+    },
+    {
+      l1: new Line(1, 0, -1),
+      l2: new Line(1, 1, -2),
+      x: 1,
+      y: 1
+    },
+    {
+      l1: new Line(1, 0, -1),
+      l2: new Line(1, -1, 0),
+      x: 1,
+      y: 1
+    },
+    {
+      l1: new Line(1, 0, -1),
+      l2: new Line(0, 1, -1),
+      x: 1,
+      y: 1
+    },
+  ];
+  
+  it.each(intersectionPointsData)('calculates the intersection point', ({ l1, l2, x, y }) => {
+    let p = l1.intersectionPoint(l2);
+    expect(p.x).toBe(x);
+    expect(p.y).toBe(y);
+  });
+  
+  it('fails on parallel lines', () => {
+    const l1 = new Line(1, -1, 3);
+    const l2 = new Line(2, -2, 6);
+    expect(() => l1.intersectionPoint(l2)).toThrowError(
+      'Lines are parallel or coincident'
+    );
+  });
 
-    const intersectionPointsData = [
-        [new Line(-1, 2),new Line(1, 0), 1, 1],
-        [new Line(1, 1),new Line(NaN, 0), 0, 1],
-        [new Line(1, 1),new Line(0, 1), 0, 1],
-        [new Line(NaN, 0),new Line(1, 1), 0, 1],
-    ];
-    
-    it.each(intersectionPointsData)('calculates the intersection point', (l1: any, l2: any, x, y) => {
-        let p = l1.intersectionPoint(l2);
-        expect(p.x).toBe(x);
-        expect(p.y).toBe(y);
-    });
+  const containingPointsData = [
+    {
+      l: new Line(1, -1, 0),
+      p: new Vector(2, 2),
+      expected: true,
+    },
+    {
+      l: new Line(1, -1, 0),
+      p: new Vector(2, 1),
+      expected: false,
+    },
+    {
+      l: new Line(1, 1, -1),
+      p: new Vector(1, 0),
+      expected: true,
+    },
+    {
+      l: new Line(1, 1, -1),
+      p: new Vector(-1, 2),
+      expected: true,
+    },
+    {
+      l: new Line(1, 1, -1),
+      p: new Vector(1, 2),
+      expected: false,
+    },
+  ];
 
-    it('calculates the intersection point', () => {
-        const l1 = new Line(-1, 2);
-        const l2 = new Line(-1, 5);
-        expect(() => l1.intersectionPoint(l2)).toThrowError('The slopes are equal');
-    });
+  it.each(containingPointsData)('detects if point is in line', ({l, p, expected}) => {
+    expect(l.containsPoint(p)).toBe(expected);
+  });
+
 });
