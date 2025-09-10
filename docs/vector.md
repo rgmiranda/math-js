@@ -1,34 +1,47 @@
 # Vectors
 
-Instantiation:
+## Creation
+
+### Constructor
 
 ```js
 const vector = new Vector(x, y);
 ```
 
-## Angle
+### From Angle
+
+```js
+let v = Vector.fromAngle(Math.PI * 0.5);
+console.log(v.x); //  0
+console.log(v.y); //  1
+```
+
+### Copy
+
+```js
+const v = new Vector(7, 2);
+const cv = v.copy();
+```
+
+## Properties
+
+### Angle
 
 ```js
 const v = new Vector(1, 1);
-console.log(v.angle); // (Math.PI * 0.5);
+console.log(v.angle); // Math.PI / 4
 ```
 
-## Magnitude
+### Magnitude
 
 ```js
 const v = new Vector(1, 1);
-console.log(v.mag); // (Math.SQRT2);
+console.log(v.mag); // Math.SQRT2
 ```
 
-## Normalization
+## Scalar Operations
 
-```js
-const v = new Vector(4, 4);
-v.nomalize();
-console.log(v.mag); // 1;
-```
-
-## Scalar Multiplication
+### Multiplication
 
 ```js
 const v = new Vector(0, 3);
@@ -37,7 +50,7 @@ console.log(v.mag); // 12;
 console.log(v.y); // 12;
 ```
 
-### Static Multiplication
+#### Static Multiplication
 
 The static scalar multiplication creates a copy of the vector and returns this
 new instance.
@@ -54,7 +67,7 @@ console.log(w.mag); // 4;
 console.log(w.y); // 4;
 ```
 
-## Scalar Division
+### Division
 
 ```js
 const v = new Vector(0, 4);
@@ -63,7 +76,7 @@ console.log(v.mag); // 2;
 console.log(v.y); // 2;
 ```
 
-### Static Scalar Division
+#### Static Division
 
 The static scalar division creates a copy of the vector and returns this new
 instance.
@@ -80,15 +93,9 @@ console.log(w.mag); // 2;
 console.log(w.y); // 2;
 ```
 
-## Dot Product
+## Vector Operations
 
-```js
-const v = new Vector(2, 3);
-const u = new Vector(-2, 3);
-console.log(v.dot(u)); // 5;
-```
-
-## Addition
+### Addition
 
 ```js
 const v = new Vector(-2, 3);
@@ -97,7 +104,7 @@ console.log(v.x); // 1
 console.log(v.y); // -2
 ```
 
-### Static Addition
+#### Static Addition
 
 The static addition creates a copy of the vector and returns this new instance.
 
@@ -113,7 +120,7 @@ console.log(w.x); // 3;
 console.log(w.y); // 4;
 ```
 
-## Substraction
+### Substraction
 
 ```js
 const v = new Vector(-2, 3);
@@ -122,7 +129,7 @@ console.log(v.x); // -5
 console.log(v.y); // 8
 ```
 
-### Static Substraction
+#### Static Substraction
 
 The static substraction creates a copy of the vector and returns this new
 instance.
@@ -139,22 +146,15 @@ console.log(w.x); // -3;
 console.log(w.y); // 4;
 ```
 
-## Distance to Another Vector
+### Dot Product
 
 ```js
-const v = new Vector(7, 2);
-console.log(v.dist(new Vector(3, -1))); // 5
+const v = new Vector(2, 3);
+const u = new Vector(-2, 3);
+console.log(v.dot(u)); // 5;
 ```
 
-## Angle to Another Vector
-
-```js
-const v1 = new Vector(0, 1);
-const v2 = new Vector(1, 0);
-console.log(v1.angleTo(v2)); // Math.PI * 0.5
-```
-
-## Projection on Another Vector
+### Projection on Another Vector
 
 ```js
 const v1 = new Vector(3, 4);
@@ -163,15 +163,16 @@ let proj = v1.projection(v2);
 console.log({x: proj.x, y: proj.y}); // { x: 2.2, y : 4.4 } 
 ```
 
-## Create Vector from Angle
+## Distance and Equality
+
+### Distance to Another Vector
 
 ```js
-let v = Vector.fromAngle(Math.PI * 0.5);
-console.log(v.x); //  0
-console.log(v.y); //  1
+const v = new Vector(7, 2);
+console.log(v.dist(new Vector(3, -1))); // 5
 ```
 
-## Equality with Other Vector
+### Equality with Other Vector
 
 ```js
 const v1 = new Vector(7, 2);
@@ -179,9 +180,20 @@ const v2 = new Vector(7, 2);
 console.log(v1.equals(v2)); // true
 ```
 
-## Copy Vector
+## Other Operations
+
+### Normalization
 
 ```js
-const v = new Vector(7, 2);
-const cv = v.copy();
+const v = new Vector(4, 4);
+v.nomalize();
+console.log(v.mag); // 1;
+```
+
+### Angle to Another Vector
+
+```js
+const v1 = new Vector(0, 1);
+const v2 = new Vector(1, 0);
+console.log(v1.angleTo(v2)); // Math.PI * 0.5
 ```
