@@ -19,9 +19,8 @@ export function factorial(n: number, m: number = NaN): number {
             throw new Error('The lower limit cannot be higher than the number');
         }
     }
-
     
-    if (n === 0) {
+    if (n === 0 || n === m - 1) {
         return 1;
     }
 

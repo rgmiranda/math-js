@@ -115,6 +115,6 @@ will ouput `1`.
 
 Generates all prime numbers up to a given integer `n` using the Sieve of Eratosthenes algorithm with bit-packing optimization.
 
-```js
+```javascript
 sieveEratosthenes(10); // [2, 3, 5, 7]
 ```
