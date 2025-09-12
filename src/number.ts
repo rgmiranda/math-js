@@ -71,6 +71,22 @@ export function prime(n: number): boolean {
 };
 
 /**
+ * Checks if a number is coprime with another
+ * @param { number } a
+ * @param { number } b
+ * @returns { boolean }
+ */
+export function coprime(a: number, b: number): boolean {
+    if (!Number.isInteger(a) || a <= 0) {
+        throw new Error('Positive integer expected');
+    }
+    if (!Number.isInteger(b) || b <= 0) {
+        throw new Error('Positive integer expected');
+    }
+    return gcd(a, b) === 1;
+};
+
+/**
  * Get the prime factorization of a positive integer
  * @param { number } n
  * @returns { number[] }

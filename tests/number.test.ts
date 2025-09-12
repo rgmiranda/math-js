@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { gcd, mod, lcm, factors, totient, prime, collatz, digitalRoots, sieveEratosthenes } from "../src";
+import { coprime } from "../src/number";
 
 describe(mod.name, () => {
     const testData: number[][] = [
@@ -93,6 +94,34 @@ describe(prime.name, () => {
     
     it.each(testData)('detects prime number', (n, expected) => {
         const result = prime(n);
+        expect(result).toBe(expected);
+    });
+    
+    it('fails on negative value', () => {
+        expect(() => { prime(-8); }).toThrowError('The number must be positive integer')
+    });
+
+    it('fails on non-integer number', () => {
+        expect(() => { prime(1.5); }).toThrowError('The number must be positive integer');
+    });
+});
+
+describe(coprime.name, () => {
+    const testData: any[][] = [
+        [6, 14, false],
+        [25, 7, true],
+        [49, 36, true],
+        [5, 3, true],
+        [3, 32, true],
+        [12, 49, true],
+        [18, 35, true],
+        [56, 27, true],
+        [18, 66, false],
+        [56, 48, false],
+    ];
+    
+    it.each(testData)('detects coprime numbers', (a, b, expected) => {
+        const result = coprime(a, b);
         expect(result).toBe(expected);
     });
     

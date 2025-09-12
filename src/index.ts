@@ -10,6 +10,7 @@ export {
     factors,
     totient,
     prime,
+    coprime,
     sieveEratosthenes,
     collatz,
     digitalRoots
