@@ -173,3 +173,40 @@ export function digitalRoots(n: number): number {
 
     return n;
 };
+
+/**
+ * Generates all prime numbers up to a given integer `n` using the
+ * Sieve of Eratosthenes algorithm with bit-packing optimization.
+ *
+ * Uses a `Uint32Array` as a compact bitset, where each bit represents
+ * whether a number has been marked as composite.
+ *
+ * @param {number} n - Upper bound (inclusive). Must be >= 2.
+ * @returns {number[]} An array of prime numbers in the range [2, n].
+ *
+ * @example
+ * sieveEratosthenes(10); // [2, 3, 5, 7]
+ */
+export function sieveEratosthenes(n: number): number[] {
+    if (n < 2) {
+        throw new Error('Integer greater than 2 expected');
+    }
+    const numBits = 32;
+    const nonPrime = new Uint32Array(Math.ceil((n + 1) / numBits));
+    const primes: number[] = [];
+    for (let i = 2; i < n; i++) {
+        const word = Math.floor(i / numBits);
+        const bit = i % numBits;
+
+        if ((nonPrime[word] & (1 << bit)) !== 0) {
+            continue;
+        }
+        primes.push(i);
+        for (let multiple = i * i; multiple < n; multiple += i) {
+            const w = Math.floor(multiple / numBits);
+            const b = multiple % numBits;
+            nonPrime[w] = nonPrime[w] | (1 << b);
+        }
+    }
+    return primes;
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { gcd, mod, lcm, factors, totient, prime, collatz, digitalRoots } from "../src";
+import { gcd, mod, lcm, factors, totient, prime, collatz, digitalRoots, sieveEratosthenes } from "../src";
 
 describe(mod.name, () => {
     const testData: number[][] = [
@@ -195,5 +195,37 @@ describe(digitalRoots.name, () => {
 
     it('fails on non-integer number', () => {
         expect(() => { digitalRoots(1.5); }).toThrowError('The number must be positive integer');
+    });
+});
+
+describe(sieveEratosthenes.name, () => {
+    const testData = [
+        {
+            n: 10,
+            p: [2, 3, 5, 7]
+        },
+        {
+            n: 20,
+            p: [2, 3, 5, 7, 11, 13, 17, 19]
+        },
+        {
+            n: 30,
+            p: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+        },
+        {
+            n: 40,
+            p: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+        },
+        {
+            n: 50,
+            p: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+        },
+    ];
+
+    it.each(testData)('generates primes with the sieve of Eratosthenes', ({
+        n,
+        p
+    }) => {
+        expect(sieveEratosthenes(n)).toEqual(p);
     });
 });

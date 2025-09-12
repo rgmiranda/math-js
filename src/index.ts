@@ -10,6 +10,7 @@ export {
     factors,
     totient,
     prime,
+    sieveEratosthenes,
     collatz,
     digitalRoots
 } from './number';
