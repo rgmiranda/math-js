@@ -16,24 +16,13 @@ export function mod(n: number, m: number): number {
  * @param { number } b
  */
 export function gcd(a: number, b: number): number {
-    if (!Number.isInteger(a) || a <= 0) {
-        throw new Error('Both numbers must be positive integers');
+    if (!Number.isInteger(a) || a <= 0 || !Number.isInteger(b) || b <= 0) {
+        throw new Error("Both numbers must be positive integers");
     }
-    if (!Number.isInteger(b) || b <= 0) {
-        throw new Error('Both numbers must be positive integers');
+    while (b !== 0) {
+        [a, b] = [b, a % b];
     }
-    if (a === b) {
-        return a;
-    }
-
-    let d: number;
-
-    do {
-        d = Math.abs(a - b);
-        a = Math.min(a, b);
-        b = d;
-    } while (d !== a && d > 0);
-    return d;
+    return a;
 };
 
 /**
