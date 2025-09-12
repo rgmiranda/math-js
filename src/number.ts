@@ -73,35 +73,27 @@ export function prime(n: number): boolean {
 /**
  * Get the prime factorization of a positive integer
  * @param { number } n
- * @returns { number[][] }
+ * @returns { number[] }
  */
-export function factors(n: number): number[][] {
+export function factors(n: number): number[] {
     if (!Number.isInteger(n) || n <= 0) {
         throw new Error('The number must be positive integer');
     }
+    const factors: number[] = [];
 
     if (n === 1) {
-        return [ [1, 1] ];
+        return [1];
     }
 
-    const factors: number[][] = [];
     let i = 2;
-    let factor = [i, 0];
     
     while (n > 1) {
         if ((n % i) === 0) {
             n /= i;
-            factor[1]++;
+            factors.push(i);
         } else {
             i++;
-            if (factor[1] > 0) {
-                factors.push(factor);
-            }
-            factor = [i, 0];
         }
-    }
-    if (factor[1] > 0) {
-        factors.push(factor);
     }
     return factors;
 };
@@ -116,11 +108,14 @@ export function totient(m: number): number {
         throw new Error('The number must be positive integer');
     }
     const factorization = factors(m);
+    const uniqueFactors = factorization.filter((item, index, self) => {
+      return self.indexOf(item) === index;
+    });
     let a = 1;
     let b = 1;
-    factorization.forEach(f => {
-        a *= f[0];
-        b *= f[0] - 1;
+    uniqueFactors.forEach(f => {
+        a *= f;
+        b *= f - 1;
     });
 
     return b * m / a; 
