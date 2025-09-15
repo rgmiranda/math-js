@@ -90,6 +90,11 @@ describe(Complex.name, () => {
         expect(cpx.b).toBe(2.5);
     });
 
+    it('fails on division by zero', () => {
+        let cpx = new Complex(8, 5);
+        expect(() => cpx.div(0)).toThrow('Division by zero');
+    });
+
     it('divides by complex number', () => {
         let cpx1 = new Complex(2, 1);
         let cpx2 = new Complex(-1, -1);
@@ -106,6 +111,12 @@ describe(Complex.name, () => {
         expect(cpx.b).toBe(1);
     });
 
+    it("fails on division by zero complex", () => {
+      let cpx = new Complex(8, 5);
+      let d = new Complex(0, 0);
+      expect(() => cpx.div(d)).toThrow("Division by zero");
+    });
+
     it('gets the square of a complex number', () => {
         let cpx = new Complex(4, 0);
         cpx = cpx.sqrt();
@@ -117,6 +128,14 @@ describe(Complex.name, () => {
         cpx = cpx.sqrt();
         
         expect(cpx.mag).toBe(Math.sqrt(5));
+    });
+
+    it('gets the argument of a complex number', () => {
+        let cpx = new Complex(4, 0);
+        expect(cpx.arg).toBe(0);
+        
+        cpx = new Complex(3, 3);
+        expect(cpx.arg).toBe(Math.PI * 0.25);
     });
 
     const toStringData = [
