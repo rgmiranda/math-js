@@ -3,10 +3,15 @@ import { Complex } from '../src';
 
 describe(Complex.name, () => {
     it('creates a new complex instance', () => {
-        const cpx = new Complex(0, 1);
+        let cpx = new Complex(0, 1);
         expect(cpx).toBeInstanceOf(Complex);
         expect(cpx.a).toBe(0);
         expect(cpx.b).toBe(1);
+
+        cpx = Complex.fromPolar(Math.SQRT2, Math.PI * 0.25)
+        expect(cpx).toBeInstanceOf(Complex);
+        expect(cpx.a).toBeCloseTo(1, 6);
+        expect(cpx.b).toBeCloseTo(1, 6);
     });
 
     const magnitudes = [

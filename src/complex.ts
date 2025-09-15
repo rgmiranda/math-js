@@ -2,9 +2,15 @@ export class Complex {
   private _mag?: number;
   private _arg?: number;
 
-  constructor(public readonly a: number, public readonly b: number) {
-    return this;
+  constructor(public readonly a: number, public readonly b: number) { }
+
+  static fromPolar(r: number, theta: number): Complex {
+    return new Complex(r * Math.cos(theta), r * Math.sin(theta));
   }
+
+  static zero = new Complex(0, 0);
+  static one = new Complex(1, 0);
+  static i = new Complex(0, 1);
 
   /**
    *
