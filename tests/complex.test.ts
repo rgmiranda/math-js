@@ -130,12 +130,30 @@ describe(Complex.name, () => {
         expect(cpx.mag).toBe(Math.sqrt(5));
     });
 
+    it('applies the pow to a complex number', () => {
+        let cpx = new Complex(4, 0);
+        cpx = cpx.pow(3);
+        
+        expect(cpx.a).toBe(64);
+        expect(cpx.b).toBe(0);
+    });
+
     it('gets the argument of a complex number', () => {
         let cpx = new Complex(4, 0);
         expect(cpx.arg).toBe(0);
         
         cpx = new Complex(3, 3);
         expect(cpx.arg).toBe(Math.PI * 0.25);
+    });
+
+    it('gets the argument of a complex number', () => {
+        let c = new Complex(4, 0);
+        let p = new Complex(4, 0);
+        expect(p.equals(c)).toBeTruthy();
+        
+        c = new Complex(4, -5);
+        p = new Complex(4, 0);
+        expect(p.equals(c)).toBeFalsy();
     });
 
     const toStringData = [

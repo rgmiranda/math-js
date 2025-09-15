@@ -74,6 +74,12 @@ export class Complex {
     return new Complex(a, b);
   }
 
+  pow(n: number): Complex {
+    const r = Math.pow(this.mag, n);
+    const theta = this.arg * n;
+    return new Complex(r * Math.cos(theta), r * Math.sin(theta));
+  }
+
   sqrt(): Complex {
     let { a, b } = this;
     const m = Math.sqrt(this.mag);
@@ -84,15 +90,12 @@ export class Complex {
     return new Complex(a, b);
   }
 
-  get arg(): number {
-    if (!this._arg) {
-      this._arg = Math.atan2(this.b, this.a);
-    }
-    return this._arg;
-  }
-
   conjugate(): Complex {
     return new Complex(this.a, -1 * this.b);
+  }
+
+  equals(n: Complex): boolean {
+    return this.a === n.a && this.b === n.b;
   }
 
   toString(): string {
@@ -124,5 +127,15 @@ export class Complex {
       this._mag = Math.sqrt(this.a * this.a + this.b * this.b);
     }
     return this._mag;
+  }
+
+  /**
+   * @returns { number }
+   */
+  get arg(): number {
+    if (!this._arg) {
+      this._arg = Math.atan2(this.b, this.a);
+    }
+    return this._arg;
   }
 };
